@@ -245,12 +245,12 @@
   .arch .conn.c-ours{stroke:#F3C5DD}
   .arch .conn.c-frozen{stroke:#C9D6EC}
   .arch .pulse{fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round;
-    stroke-dasharray:15 85; stroke-dashoffset:0; animation:archFlow 2.4s linear infinite}
+    stroke-dasharray:16 84; stroke-dashoffset:0; opacity:0}
+  .arch .pulse.flowing{opacity:1; animation:archFlow 1.05s linear infinite}
   .arch .pulse.p-slate{stroke:var(--slate)}
   .arch .pulse.p-ours{stroke:var(--ours)}
   .arch .pulse.p-frozen{stroke:var(--frozen)}
   @keyframes archFlow{ to{ stroke-dashoffset:-100 } }
-  @media (prefers-reduced-motion: reduce){ .arch .pulse{animation:none; opacity:0} }
   /* auto-running diagram highlight (animates on its own) */
   .arch .stage .node{transition:fill .35s, stroke .35s}
   .arch .stage.lit .node{fill:var(--ours-tint); stroke:var(--ours); stroke-width:2.2}
@@ -1336,17 +1336,17 @@
 
           <!-- stage-to-stage connectors: faint line + travelling pulse -->
           <path class="conn c-slate" d="M232,184 V202" marker-start="url(#dotG)" marker-end="url(#dotG)"/>
-          <path class="pulse p-slate" pathLength="100" d="M232,184 V202"/>
+          <path class="pulse p-slate" data-flow="s0" pathLength="100" d="M232,184 V202"/>
           <path class="conn c-slate" d="M232,254 V272" marker-start="url(#dotG)" marker-end="url(#dotG)"/>
-          <path class="pulse p-slate" pathLength="100" d="M232,254 V272" style="animation-delay:.3s"/>
+          <path class="pulse p-slate" data-flow="s1" pathLength="100" d="M232,254 V272"/>
           <path class="conn c-slate" d="M232,324 V342" marker-start="url(#dotG)" marker-end="url(#dotG)"/>
-          <path class="pulse p-slate" pathLength="100" d="M232,324 V342" style="animation-delay:.6s"/>
+          <path class="pulse p-slate" data-flow="s2" pathLength="100" d="M232,324 V342"/>
           <path class="conn c-ours" d="M232,394 V414" marker-start="url(#dotM)" marker-end="url(#dotM)"/>
-          <path class="pulse p-ours" pathLength="100" d="M232,394 V414" style="animation-delay:.9s"/>
+          <path class="pulse p-ours" data-flow="done" pathLength="100" d="M232,394 V414"/>
 
           <!-- recover feedback (verify -> perceive) -->
           <path class="conn c-ours" d="M100,366 C68,366 68,158 100,158" marker-start="url(#dotM)" marker-end="url(#dotM)"/>
-          <path class="pulse p-ours" pathLength="100" d="M100,366 C68,366 68,158 100,158" style="animation-delay:.4s"/>
+          <path class="pulse p-ours" data-flow="s3" pathLength="100" d="M100,366 C68,366 68,158 100,158"/>
           <text class="lab" x="60" y="270" transform="rotate(-90 60 270)" style="fill:var(--ours)">recover · retry · escalate</text>
 
           <!-- frozen backends -->
@@ -1370,9 +1370,9 @@
 
           <!-- call: Act -> both frozen backends (rounded elbows) -->
           <path class="conn c-frozen" d="M364,292 H497 Q505,292 505,284 V213 Q505,205 513,205 H556" marker-start="url(#dotS)" marker-end="url(#dotS)"/>
-          <path class="pulse p-frozen" pathLength="100" d="M364,292 H497 Q505,292 505,284 V213 Q505,205 513,205 H556"/>
+          <path class="pulse p-frozen" data-flow="s2" data-be="0" pathLength="100" d="M364,292 H497 Q505,292 505,284 V213 Q505,205 513,205 H556"/>
           <path class="conn c-frozen" d="M505,292 V367 Q505,375 513,375 H556" marker-end="url(#dotS)"/>
-          <path class="pulse p-frozen" pathLength="100" d="M505,292 V367 Q505,375 513,375 H556" style="animation-delay:.5s"/>
+          <path class="pulse p-frozen" data-flow="s2" data-be="1" pathLength="100" d="M505,292 V367 Q505,375 513,375 H556"/>
           <circle cx="505" cy="292" r="3.2" fill="#6E8BC0"/>
           <text class="lab" x="394" y="284">call subgoal</text>
           <text class="lab" x="512" y="200" style="fill:var(--frozen)">rigid</text>
@@ -1380,9 +1380,9 @@
 
           <!-- observation: backends -> Verify (rounded elbows) -->
           <path class="conn c-frozen" d="M556,262 H483 Q475,262 475,270 V352 Q475,360 467,360 H366" marker-start="url(#dotS)" marker-end="url(#dotS)"/>
-          <path class="pulse p-frozen" pathLength="100" d="M556,262 H483 Q475,262 475,270 V352 Q475,360 467,360 H366" style="animation-delay:1.1s"/>
+          <path class="pulse p-frozen" data-flow="s2" data-be="0" pathLength="100" d="M556,262 H483 Q475,262 475,270 V352 Q475,360 467,360 H366"/>
           <path class="conn c-frozen" d="M556,408 H483 Q475,408 475,400 V360" marker-start="url(#dotS)"/>
-          <path class="pulse p-frozen" pathLength="100" d="M556,408 H483 Q475,408 475,400 V360" style="animation-delay:1.3s"/>
+          <path class="pulse p-frozen" data-flow="s2" data-be="1" pathLength="100" d="M556,408 H483 Q475,408 475,400 V360"/>
           <text class="lab" x="394" y="354">observation</text>
 
           <!-- legend -->
@@ -1588,6 +1588,7 @@
     if(!arch) return;
     const stages = [...arch.querySelectorAll('.stage')];
     const backends = [...arch.querySelectorAll('.backend')];
+    const pulses = [...arch.querySelectorAll('.pulse')];
     const doneNode = arch.querySelector('.done-node');
     if(!stages.length) return;
     const LOOPS = 3;                            // loops before the task "completes"
@@ -1598,15 +1599,24 @@
       stages.forEach(s=> s.classList.remove('lit'));
       backends.forEach(b=> b.classList.remove('lit'));
       if(doneNode) doneNode.classList.remove('lit');
+      let key = null;                           // which connectors should flow this frame
       if(pos < stages.length * LOOPS){
         const si = pos % stages.length;
         stages[si].classList.add('lit');
         // choose a random backend when "Act" starts; keep it lit through Verify so it's visible
         if(si === 2) pick = Math.floor(Math.random() * backends.length);
         if((si === 2 || si === 3) && backends.length){ backends[pick].classList.add('lit'); }
+        key = 's' + si;
       } else if(doneNode){
         doneNode.classList.add('lit');          // after several loops, the goal is met
+        key = 'done';
       }
+      // only pulse the connectors leaving the active bubble (and the picked backend's I/O)
+      pulses.forEach(p=>{
+        const on = p.dataset.flow === key &&
+          (p.dataset.be === undefined || parseInt(p.dataset.be, 10) === pick);
+        p.classList.toggle('flowing', on);
+      });
       t++;
     }
     if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){ tick(); setInterval(tick, 1150); }
