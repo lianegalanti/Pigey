@@ -110,8 +110,8 @@
   .btn:hover{transform:translateY(-1px); box-shadow:0 6px 16px -10px rgba(0,0,0,.4)}
   .btn.primary{background:var(--ink); color:#fff; border-color:var(--ink)}
   .btn.primary:hover{background:var(--ours-strong); border-color:var(--ours-strong)}
-  .btn.soon{color:var(--faint); border-color:var(--line-strong); cursor:default; background:var(--surface)}
-  .btn.soon:hover{transform:none; box-shadow:none}
+  .btn.soon{color:var(--slate); border-color:var(--line-strong); background:var(--surface)}
+  .btn.soon:hover{border-color:var(--ink); color:var(--ink)}
   .btn.soon .tag{font-size:11px; color:var(--faint); padding-left:2px}
   .btn svg{width:15px; height:15px}
 
@@ -464,10 +464,10 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg>
           Paper
         </a>
-        <span class="btn soon" data-link="code" title="Code release coming soon">
+        <a class="btn soon" href="https://github.com/lianegalanti/Pigey" data-link="code" title="Code release coming soon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>
           Code <span class="tag">· coming soon</span>
-        </span>
+        </a>
       </div>
     </div>
 
