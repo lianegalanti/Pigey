@@ -239,10 +239,18 @@
   .arch .frozen-tag{font-family:var(--mono); font-size:9px; fill:var(--frozen); letter-spacing:.06em; text-anchor:middle}
   .arch .lab{font-family:var(--mono); font-size:10px; fill:var(--slate)}
   .arch .note{font-family:var(--mono); font-size:10px; fill:var(--faint)}
-  .arch .flow{fill:none; stroke:var(--slate); stroke-width:1.6}
-  .arch .flow-m{fill:none; stroke:var(--ours); stroke-width:1.8}
-  .arch .flow-s{fill:none; stroke:var(--frozen); stroke-width:1.7}
-  .arch .dash{stroke-dasharray:5 4}
+  /* connectors: thin faint base line w/ dot ends + a travelling colour pulse */
+  .arch .conn{fill:none; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round}
+  .arch .conn.c-slate{stroke:#CAD0D9}
+  .arch .conn.c-ours{stroke:#F3C5DD}
+  .arch .conn.c-frozen{stroke:#C9D6EC}
+  .arch .pulse{fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:15 85; stroke-dashoffset:0; animation:archFlow 2.4s linear infinite}
+  .arch .pulse.p-slate{stroke:var(--slate)}
+  .arch .pulse.p-ours{stroke:var(--ours)}
+  .arch .pulse.p-frozen{stroke:var(--frozen)}
+  @keyframes archFlow{ to{ stroke-dashoffset:-100 } }
+  @media (prefers-reduced-motion: reduce){ .arch .pulse{animation:none; opacity:0} }
   /* auto-running diagram highlight (animates on its own) */
   .arch .stage .node{transition:fill .35s, stroke .35s}
   .arch .stage.lit .node{fill:var(--ours-tint); stroke:var(--ours); stroke-width:2.2}
@@ -1281,9 +1289,9 @@
         <!-- Hand-drawn schematic. To use your own render instead, replace this <svg> with <img src="static/diagram.png">. -->
         <svg class="arch" viewBox="0 0 960 524" role="img" aria-label="Architecture: a frontier VLM orchestrator runs a closed loop — Perceive, Reason, Act, Verify — calling two frozen backends (a TAMP planner and a pi-0.5 VLA), verifying outcomes, recovering on failure, and emitting Done.">
           <defs>
-            <marker id="aH" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#565F6E"/></marker>
-            <marker id="aHm" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#D6207E"/></marker>
-            <marker id="aHs" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#6E8BC0"/></marker>
+            <marker id="dotG" markerWidth="8" markerHeight="8" refX="4" refY="4"><circle cx="4" cy="4" r="2.5" fill="#9AA3B0"/></marker>
+            <marker id="dotM" markerWidth="8" markerHeight="8" refX="4" refY="4"><circle cx="4" cy="4" r="2.5" fill="#D6207E"/></marker>
+            <marker id="dotS" markerWidth="8" markerHeight="8" refX="4" refY="4"><circle cx="4" cy="4" r="2.5" fill="#8FA6CC"/></marker>
           </defs>
 
           <!-- instruction -->
@@ -1326,14 +1334,19 @@
           </g>
           <text class="note" x="64" y="480">closed loop · no motor weights live here</text>
 
-          <!-- stage-to-stage arrows -->
-          <path class="flow" d="M232,184 V202" marker-end="url(#aH)"/>
-          <path class="flow" d="M232,254 V272" marker-end="url(#aH)"/>
-          <path class="flow" d="M232,324 V342" marker-end="url(#aH)"/>
-          <path class="flow-m" d="M232,394 V414" marker-end="url(#aHm)"/>
+          <!-- stage-to-stage connectors: faint line + travelling pulse -->
+          <path class="conn c-slate" d="M232,184 V202" marker-start="url(#dotG)" marker-end="url(#dotG)"/>
+          <path class="pulse p-slate" pathLength="100" d="M232,184 V202"/>
+          <path class="conn c-slate" d="M232,254 V272" marker-start="url(#dotG)" marker-end="url(#dotG)"/>
+          <path class="pulse p-slate" pathLength="100" d="M232,254 V272" style="animation-delay:.3s"/>
+          <path class="conn c-slate" d="M232,324 V342" marker-start="url(#dotG)" marker-end="url(#dotG)"/>
+          <path class="pulse p-slate" pathLength="100" d="M232,324 V342" style="animation-delay:.6s"/>
+          <path class="conn c-ours" d="M232,394 V414" marker-start="url(#dotM)" marker-end="url(#dotM)"/>
+          <path class="pulse p-ours" pathLength="100" d="M232,394 V414" style="animation-delay:.9s"/>
 
           <!-- recover feedback (verify -> perceive) -->
-          <path class="flow-m dash" d="M100,366 C68,366 68,158 100,158" marker-end="url(#aHm)"/>
+          <path class="conn c-ours" d="M100,366 C68,366 68,158 100,158" marker-start="url(#dotM)" marker-end="url(#dotM)"/>
+          <path class="pulse p-ours" pathLength="100" d="M100,366 C68,366 68,158 100,158" style="animation-delay:.4s"/>
           <text class="lab" x="60" y="270" transform="rotate(-90 60 270)" style="fill:var(--ours)">recover · retry · escalate</text>
 
           <!-- frozen backends -->
@@ -1355,17 +1368,21 @@
             <text class="t-desc" x="584" y="408">deformable · contact-rich control</text>
           </g>
 
-          <!-- call: Act -> both frozen backends (solid, orthogonal) -->
-          <path class="flow-s" d="M364,292 H505 V205 H556" marker-end="url(#aHs)"/>
-          <path class="flow-s" d="M505,292 V375 H556" marker-end="url(#aHs)"/>
-          <circle cx="505" cy="292" r="3" fill="#6E8BC0"/>
+          <!-- call: Act -> both frozen backends (rounded elbows) -->
+          <path class="conn c-frozen" d="M364,292 H497 Q505,292 505,284 V213 Q505,205 513,205 H556" marker-start="url(#dotS)" marker-end="url(#dotS)"/>
+          <path class="pulse p-frozen" pathLength="100" d="M364,292 H497 Q505,292 505,284 V213 Q505,205 513,205 H556"/>
+          <path class="conn c-frozen" d="M505,292 V367 Q505,375 513,375 H556" marker-end="url(#dotS)"/>
+          <path class="pulse p-frozen" pathLength="100" d="M505,292 V367 Q505,375 513,375 H556" style="animation-delay:.5s"/>
+          <circle cx="505" cy="292" r="3.2" fill="#6E8BC0"/>
           <text class="lab" x="394" y="284">call subgoal</text>
           <text class="lab" x="512" y="200" style="fill:var(--frozen)">rigid</text>
           <text class="lab" x="512" y="369" style="fill:var(--frozen)">deformable</text>
 
-          <!-- observation: backends -> Verify (dashed, orthogonal) -->
-          <path class="flow-s dash" d="M556,262 H475 V360 H366" marker-end="url(#aHs)"/>
-          <path class="flow-s dash" d="M556,408 H475 V360"/>
+          <!-- observation: backends -> Verify (rounded elbows) -->
+          <path class="conn c-frozen" d="M556,262 H483 Q475,262 475,270 V352 Q475,360 467,360 H366" marker-start="url(#dotS)" marker-end="url(#dotS)"/>
+          <path class="pulse p-frozen" pathLength="100" d="M556,262 H483 Q475,262 475,270 V352 Q475,360 467,360 H366" style="animation-delay:1.1s"/>
+          <path class="conn c-frozen" d="M556,408 H483 Q475,408 475,400 V360" marker-start="url(#dotS)"/>
+          <path class="pulse p-frozen" pathLength="100" d="M556,408 H483 Q475,408 475,400 V360" style="animation-delay:1.3s"/>
           <text class="lab" x="394" y="354">observation</text>
 
           <!-- legend -->
