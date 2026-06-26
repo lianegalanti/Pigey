@@ -259,6 +259,9 @@
 
   .twocol{display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start}
   @media(max-width:860px){ .twocol{grid-template-columns:1fr} }
+  /* results tables: side-by-side on desktop, stacked on phone */
+  .results-grid{display:grid; grid-template-columns:1.5fr 1fr; gap:24px; align-items:start}
+  @media(max-width:860px){ .results-grid{grid-template-columns:1fr; gap:30px} }
 
   /* ---------- rollouts ---------- */
   .roll{margin-top:8px; display:flex; flex-direction:column; gap:26px}
@@ -329,6 +332,13 @@
     width:min(1060px,93vw); max-height:90vh; overflow-y:auto; background:var(--surface); border:1px solid var(--line);
     border-radius:18px; padding:clamp(20px,3vw,34px); box-shadow:0 40px 90px -40px rgba(17,20,27,.7)}
   .demo-block.open .reason-video{position:sticky; top:0; align-self:start}
+  /* keep video + trace side-by-side even on phones, but only inside an opened demo */
+  @media(max-width:880px){
+    .demo-block.open .reason-grid{grid-template-columns:1fr 1fr; gap:14px}
+    .demo-block.open .reason-grid.tall{grid-template-columns:minmax(0,44%) 1fr; gap:14px}
+    .demo-block.open .reason-grid.tall .reason-video{max-width:none; margin:0}
+    .demo-block.open .reason-video{top:0}
+  }
   .modal-close{position:fixed; z-index:110; top:18px; right:20px; width:42px; height:42px; border-radius:50%;
     background:var(--surface); border:1px solid var(--line-strong); color:var(--ink); font-size:18px; cursor:pointer;
     display:none; align-items:center; justify-content:center; transition:.18s}
@@ -1370,7 +1380,7 @@
       <h2>Same frozen weights. Only the inference-time process changes.</h2>
     </div>
 
-    <div class="reveal" style="display:grid; grid-template-columns:1.5fr 1fr; gap:24px; align-items:start">
+    <div class="reveal results-grid">
       <div>
         <div class="tablewrap">
           <table>
