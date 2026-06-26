@@ -82,6 +82,15 @@
     padding:7px 11px; border:1px solid transparent; border-radius:7px; transition:.18s;
   }
   nav .links a:hover{color:var(--ink); border-color:var(--line-strong); background:var(--surface)}
+  /* mobile: keep nav links on one tidy row instead of wrapping Results/Cite below */
+  @media(max-width:640px){
+    nav .wrap{gap:10px; height:52px}
+    nav .brand{display:none}
+    nav .links{margin:0; width:100%; justify-content:space-between; flex-wrap:nowrap;
+      overflow-x:auto; gap:0; scrollbar-width:none; -webkit-overflow-scrolling:touch}
+    nav .links::-webkit-scrollbar{display:none}
+    nav .links a{flex:0 0 auto; padding:6px 6px; font-size:11.5px}
+  }
 
   /* ---------- hero ---------- */
   header{padding:clamp(40px,7vw,86px) 0 18px}
