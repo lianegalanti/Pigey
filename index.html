@@ -94,6 +94,8 @@
 
   .authors{margin:30px 0 0; display:flex; flex-wrap:wrap; gap:4px 22px; font-size:16.5px}
   .authors .a{font-weight:500}
+  .authors a{color:inherit; text-decoration:none; cursor:pointer; transition:color .18s}
+  .authors a:hover{color:var(--ours)}
   .authors sup{color:var(--ours); font-family:var(--mono); font-size:.7em; font-weight:500}
   .affils{margin:12px 0 0; color:var(--slate); font-size:14px; font-family:var(--mono); display:flex; flex-wrap:wrap; gap:4px 18px}
   .affils sup{color:var(--ours)}
@@ -108,17 +110,35 @@
   .btn:hover{transform:translateY(-1px); box-shadow:0 6px 16px -10px rgba(0,0,0,.4)}
   .btn.primary{background:var(--ink); color:#fff; border-color:var(--ink)}
   .btn.primary:hover{background:var(--ours-strong); border-color:var(--ours-strong)}
+  .btn.soon{color:var(--faint); border-color:var(--line-strong); cursor:default; background:var(--surface)}
+  .btn.soon:hover{transform:none; box-shadow:none}
+  .btn.soon .tag{font-size:11px; color:var(--faint); padding-left:2px}
   .btn svg{width:15px; height:15px}
 
   .hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:clamp(28px,5vw,56px); align-items:start}
   @media(max-width:860px){ .hero-grid{grid-template-columns:1fr} }
 
   /* ---------- orchestrator console (signature) ---------- */
+  .hero-media{position:sticky; top:78px; display:flex; flex-direction:column; gap:14px; max-width:340px; margin-left:auto}
+  @media(max-width:860px){ .hero-media{position:static; margin-inline:auto} }
+  .hero-vid{border-radius:16px; overflow:hidden; background:#000; line-height:0; box-shadow:0 30px 60px -40px rgba(17,20,27,.7)}
+  .hero-vid video{display:block; width:100%; aspect-ratio:360/516; object-fit:cover}
   .console{
     background:var(--console); color:var(--console-text);
-    border-radius:16px; padding:20px; margin-top:8px;
-    box-shadow:0 30px 60px -40px rgba(17,20,27,.7); position:sticky; top:78px;
+    border-radius:16px; padding:20px;
+    box-shadow:0 30px 60px -40px rgba(17,20,27,.7);
   }
+  .console.console-sm{padding:15px 16px}
+  .console.console-sm .bar{margin-bottom:12px}
+  .console .stream{min-height:132px; transition:opacity .4s ease}
+  .console .stream.fade{opacity:0}
+  .console .stream .th{font-family:var(--mono); font-size:14px; line-height:1.55; color:var(--console-text); margin:0}
+  .console .stream .cl{font-family:var(--mono); font-size:13px; margin:14px 0 0; color:var(--console-dim)}
+  .console .stream .cl .p{color:var(--ours); margin-right:6px}
+  .console .stream .cl .fn{color:var(--ours)}
+  .console .stream .cl .ar{color:var(--frozen)}
+  .console.console-sm .loop li{font-size:12.5px; padding:9px 11px}
+  .console.console-sm .foot{margin-top:11px}
   .console .bar{display:flex; align-items:center; gap:7px; margin-bottom:16px}
   .console .dot{width:9px; height:9px; border-radius:50%; background:var(--console-line)}
   .console .dot.live{background:var(--ours); box-shadow:0 0 0 0 var(--ours); animation:pulse 2.4s infinite}
@@ -145,7 +165,7 @@
   .console .foot b{color:var(--frozen); font-weight:500}
 
   /* ---------- generic section ---------- */
-  .section{padding:clamp(48px,8vw,92px) 0; border-top:1px solid var(--line)}
+  .section{padding:clamp(32px,4.5vw,56px) 0; border-top:1px solid var(--line)}
   .section > .wrap > .head{max-width:54ch; margin-bottom:36px}
   .section h2{font-family:var(--display); font-weight:600; letter-spacing:-.015em; font-size:clamp(26px,4vw,40px); line-height:1.08; margin:.5em 0 0}
   .section p.intro{color:var(--slate); margin:.9em 0 0}
@@ -176,14 +196,15 @@
   }
 
   /* ---------- tools ---------- */
-  .tools{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-top:8px}
-  .tool{background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:18px}
-  .tool .name{font-family:var(--mono); font-weight:500; font-size:14.5px}
-  .tool .name b{color:var(--ours)}
-  .tool .desc{color:var(--slate); font-size:14px; margin-top:7px}
-  .pillrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:26px}
-  .pill{font-family:var(--mono); font-size:12.5px; color:var(--slate); border:1px solid var(--line-strong); background:var(--surface); border-radius:999px; padding:7px 13px}
-  .pill b{color:var(--ink); font-weight:500}
+  .tools{display:grid; grid-template-columns:repeat(auto-fit,minmax(186px,1fr)); gap:13px; margin-top:8px}
+  .tool{background:var(--surface); border:1px solid var(--line); border-radius:13px; padding:0; overflow:hidden;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease}
+  .tool:hover{transform:translateY(-3px); box-shadow:0 16px 32px -20px rgba(17,20,27,.5); border-color:var(--line-strong)}
+  .tool .name{display:flex; align-items:center; gap:9px; font-family:var(--mono); font-weight:500; font-size:13.5px; color:var(--ink);
+    padding:13px 15px; border-bottom:1px solid var(--line); background:linear-gradient(180deg,var(--paper),var(--surface))}
+  .tool .name::before{content:""; flex:0 0 auto; width:7px; height:7px; border-radius:50%; background:var(--ours); box-shadow:0 0 0 3px var(--ours-tint)}
+  .tool .name b{color:var(--ours-strong); font-weight:600}
+  .tool .desc{color:var(--slate); font-size:13.5px; padding:13px 15px 15px; line-height:1.5}
 
   figure.diagram{margin:34px 0 0; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px; text-align:center}
   figure.diagram img{max-width:100%; height:auto; border-radius:8px; display:block; margin:0 auto}
@@ -213,13 +234,21 @@
   .arch .flow-m{fill:none; stroke:var(--ours); stroke-width:1.8}
   .arch .flow-s{fill:none; stroke:var(--frozen); stroke-width:1.7}
   .arch .dash{stroke-dasharray:5 4}
+  /* auto-running diagram highlight (animates on its own) */
+  .arch .stage .node{transition:fill .35s, stroke .35s}
+  .arch .stage.lit .node{fill:var(--ours-tint); stroke:var(--ours); stroke-width:2.2}
+  .arch .stage.lit .t-node{fill:var(--ours-strong)}
+  .arch .backend .frozen-box{transition:fill .35s, stroke-width .35s}
+  .arch .backend.lit .frozen-box{fill:#9db9e3; stroke:var(--frozen); stroke-width:3}
+  .arch .done-node{opacity:.38; transition:opacity .4s}
+  .arch .done-node.lit{opacity:1}
 
   /* ---------- tables ---------- */
   .tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:14px; background:var(--surface)}
-  table{border-collapse:collapse; width:100%; font-size:14.5px; min-width:520px}
-  caption{caption-side:top; text-align:left; padding:18px 18px 0; color:var(--slate); font-size:14px}
+  table{border-collapse:collapse; width:100%; font-size:13.5px; min-width:440px}
+  caption{caption-side:top; text-align:left; padding:16px 16px 0; color:var(--slate); font-size:13.5px}
   caption b{color:var(--ink)}
-  th,td{padding:11px 16px; text-align:right; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums; font-family:var(--mono)}
+  th,td{padding:9px 11px; text-align:right; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums; font-family:var(--mono)}
   th:first-child,td:first-child{text-align:left; font-family:var(--body)}
   thead th{color:var(--slate); font-weight:500; font-size:12.5px; letter-spacing:.03em; border-bottom:1px solid var(--line-strong)}
   tbody tr:last-child td{border-bottom:none}
@@ -240,6 +269,135 @@
   .frame{background:var(--surface); border:1px solid var(--line); border-radius:10px; overflow:hidden}
   .frame img{display:block; width:100%; aspect-ratio:4/3; object-fit:cover; background:var(--paper)}
   .frame .cap{font-size:12.5px; color:var(--slate); padding:9px 11px; font-style:italic; line-height:1.35}
+
+  /* ---------- videos ---------- */
+  .videos{display:flex; flex-direction:column; gap:18px; margin-top:8px}
+  .vid{background:var(--surface); border:1px solid var(--line); border-radius:14px; overflow:hidden}
+  .vid video{display:block; width:100%; aspect-ratio:1520/720; background:#000}
+  .vid.portrait{max-width:392px; margin-inline:auto}
+  .vid.portrait video{aspect-ratio:1080/1920; max-height:640px; object-fit:contain}
+  .vid .meta{padding:14px 16px 16px}
+  .vid .meta .name{font-family:var(--mono); font-size:13.5px; color:var(--ink)}
+  .vid .meta .name b{color:var(--ours); font-weight:500}
+  .vid .meta .desc{color:var(--slate); font-size:13.5px; margin-top:5px}
+
+  /* ---------- reasoning trace ---------- */
+  .reason-grid{display:grid; grid-template-columns:1.04fr .96fr; gap:clamp(24px,4vw,44px); align-items:start; margin-top:8px}
+  @media(max-width:880px){ .reason-grid{grid-template-columns:1fr} }
+  .reason-video{position:sticky; top:78px}
+  @media(max-width:880px){ .reason-video{position:static} }
+  .reason-video .vid{margin:0}
+  .reason-video video{display:block; width:100%; aspect-ratio:1520/720; background:#000; border-radius:14px}
+  /* portrait-video variant (memory task) */
+  .reason-grid.tall{grid-template-columns:minmax(0,340px) 1fr}
+  @media(max-width:880px){ .reason-grid.tall{grid-template-columns:1fr} }
+  .reason-grid.tall .reason-video{max-width:340px}
+  @media(max-width:880px){ .reason-grid.tall .reason-video{margin-inline:auto} }
+  .reason-grid.tall .reason-video video{aspect-ratio:720/1040}
+  /* three demos grouped under one section */
+  .demo-h{margin-bottom:20px}
+  .demo-h h3{font-family:var(--display); font-weight:600; letter-spacing:-.01em; font-size:clamp(20px,3vw,28px); line-height:1.1; margin:.45em 0 0}
+
+  /* ===== demo gallery (featured tall card + 3x2 grid) ===== */
+  .gallery{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:8px}
+  .six{display:contents}
+  .card.featured{grid-column:1; grid-row:1 / span 2; display:flex; flex-direction:column}
+  .card.featured .poster{flex:1 1 auto; aspect-ratio:auto; min-height:0}
+  @media(max-width:840px){
+    .gallery{grid-template-columns:1fr 1fr}
+    .card.featured{grid-column:1 / -1; grid-row:auto; flex-direction:column}
+    .card.featured .poster{aspect-ratio:16/9; flex:none}
+  }
+  @media(max-width:500px){ .gallery{grid-template-columns:1fr} }
+  .card{display:block; text-align:left; background:none; border:0; padding:0; font:inherit; color:inherit; cursor:pointer}
+  .card .poster{position:relative; display:block; aspect-ratio:16/9; border-radius:13px; overflow:hidden;
+    background-size:cover; background-position:center; border:1px solid var(--line); transition:transform .2s ease, box-shadow .2s ease}
+  .card:hover .poster{transform:translateY(-3px); box-shadow:0 18px 36px -22px rgba(17,20,27,.55)}
+  .card .poster::after{content:""; position:absolute; inset:0; background:linear-gradient(to top, rgba(17,20,27,.8), rgba(17,20,27,.04) 58%)}
+  .card .q{position:absolute; left:14px; right:14px; bottom:12px; z-index:2; color:#fff; font-family:var(--mono); font-size:13px; line-height:1.4}
+  .card .view{position:absolute; z-index:2; top:11px; right:11px; font-family:var(--mono); font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:#fff; border:1px solid rgba(255,255,255,.5); border-radius:999px; padding:5px 10px; opacity:0; transition:.2s}
+  .card:hover .view{opacity:1; background:var(--ours); border-color:var(--ours)}
+  .card .cat{display:block; font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--slate); margin-top:11px; transition:.2s}
+  .card:hover .cat{color:var(--ours-strong)}
+
+  /* ===== a demo-block becomes a modal overlay when .open ===== */
+  .demo-block{display:none}
+  .demo-backdrop{position:fixed; inset:0; z-index:90; background:rgba(17,20,27,.62); backdrop-filter:blur(5px); display:none}
+  .demo-backdrop.open{display:block}
+  .demo-block.open{display:block; opacity:1; position:fixed; z-index:100; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:min(1060px,93vw); max-height:90vh; overflow-y:auto; background:var(--surface); border:1px solid var(--line);
+    border-radius:18px; padding:clamp(20px,3vw,34px); box-shadow:0 40px 90px -40px rgba(17,20,27,.7)}
+  .demo-block.open .reason-video{position:sticky; top:0; align-self:start}
+  .modal-close{position:fixed; z-index:110; top:18px; right:20px; width:42px; height:42px; border-radius:50%;
+    background:var(--surface); border:1px solid var(--line-strong); color:var(--ink); font-size:18px; cursor:pointer;
+    display:none; align-items:center; justify-content:center; transition:.18s}
+  .modal-close.open{display:flex}
+  .modal-close:hover{background:var(--ours); color:#fff; border-color:var(--ours)}
+
+  .trace-instr{display:flex; gap:12px; align-items:flex-start; background:var(--console); color:var(--console-text);
+    border-radius:12px; padding:15px 17px; margin-bottom:6px; font-family:var(--mono); font-size:14px; line-height:1.45}
+  .trace-instr .ic{flex:0 0 auto; width:18px; height:18px; margin-top:1px; color:var(--ours)}
+  .trace-instr .lab{display:block; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--console-dim); margin-bottom:3px}
+  .trace-instr b{color:#fff; font-weight:500}
+  .reason-video .trace-instr{margin:0 0 14px}
+  .demo-block.open .trace .steps{margin-top:0}
+
+  .steps{margin-top:22px; display:flex; flex-direction:column}
+  .step{display:grid; grid-template-columns:26px 1fr; gap:15px; text-align:left; width:100%;
+    background:none; border:0; font:inherit; color:inherit; cursor:pointer; padding:0 0 20px}
+  .step:last-child{padding-bottom:0}
+  .step-rail{position:relative; display:flex; justify-content:center}
+  .step-rail::before{content:""; position:absolute; left:50%; top:6px; bottom:-20px; width:2px; transform:translateX(-50%); background:var(--line); transition:.3s}
+  .step:last-child .step-rail::before{display:none}
+  .step.done .step-rail::before{background:var(--ours-tint)}
+  .step .dot{position:relative; z-index:1; width:14px; height:14px; border-radius:50%; margin-top:3px;
+    background:var(--surface); border:2px solid var(--line-strong); transition:.3s}
+  .step.done .dot{background:var(--ours); border-color:var(--ours)}
+  .step.on .dot{background:var(--ours); border-color:var(--ours); box-shadow:0 0 0 5px var(--ours-tint)}
+  .step-tag{font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--faint); transition:.3s}
+  .step.on .step-tag{color:var(--ours)}
+  .step-title{display:block; font-family:var(--display); font-weight:600; font-size:16.5px; line-height:1.25; margin-top:1px; color:var(--slate); transition:.3s}
+  .step.on .step-title, .step.done .step-title{color:var(--ink)}
+  .step:hover .step-title{color:var(--ours-strong)}
+  .step-thought{display:block; font-size:14px; color:var(--faint); line-height:1.5; margin-top:6px; max-width:48ch; transition:.3s}
+  .step.on .step-thought{color:var(--slate)}
+  .step .time{font-family:var(--mono); font-size:11px; color:var(--faint); margin-left:8px; font-weight:400}
+  .step.on .time{color:var(--ours)}
+
+  /* inline tool-call chip inside a step (soft-dark "code" style) */
+  .step-call{display:inline-flex; flex-wrap:wrap; align-items:baseline; gap:0 8px; margin-top:11px;
+    font-family:var(--mono); font-size:12.5px; line-height:1.5;
+    background:#2b313d; color:var(--console-text); border:1px solid #3b4250;
+    border-radius:9px; padding:8px 11px; transition:.24s}
+  .step-call .p{color:#7e889a}
+  .step-call .fn{color:var(--console-text)}
+  .step-call .arg{color:#9db8e6}
+  .step-call .res{width:100%; color:#aab4c3; opacity:.85; transition:.24s}
+  .step-call .cl{flex:0 0 100%}
+  .step-call .cl + .cl{padding-left:15px}
+  .step.on .step-call{border-color:var(--ours); background:#343c4a}
+  .step.on .step-call .p{color:var(--ours)}
+  .step.on .step-call .fn{color:var(--ours)}
+  .step.on .step-call .res{opacity:1; color:var(--console-text)}
+  .step.done .step-call .p{color:var(--frozen)}
+
+  /* memory store panel (memory task) */
+  .memcard{margin-top:14px; background:var(--console); color:var(--console-text); border-radius:14px; padding:13px 14px}
+  .memcard .bar{display:flex; align-items:center; gap:7px; margin-bottom:11px}
+  .memcard .d{width:8px; height:8px; border-radius:50%; background:var(--console-line)}
+  .memcard .d.live{background:var(--ours); box-shadow:0 0 0 0 var(--ours); animation:pulse 2.4s infinite}
+  .memcard .title{font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--console-dim)}
+  .memlist{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:3px}
+  .memlist li{display:flex; justify-content:space-between; align-items:baseline; gap:10px; font-family:var(--mono); font-size:12px;
+    padding:7px 9px; border:1px solid transparent; border-radius:8px; transition:.25s}
+  .memlist li .mk{color:var(--console-text)}
+  .memlist li .mv{color:var(--console-dim); font-size:11px}
+  .memlist li.write{border-color:var(--frozen); background:rgba(110,139,192,.14)}
+  .memlist li.write .mv{color:var(--frozen)}
+  .memlist li.use{border-color:var(--ours); background:rgba(214,32,126,.12)}
+  .memlist li.use .mk{color:var(--ours)}
+  .memlist li.use .mv{color:var(--console-text)}
 
   /* ---------- bibtex ---------- */
   .bibtex{position:relative; background:var(--console); color:var(--console-text); border-radius:14px; overflow:hidden}
@@ -272,11 +430,12 @@
   <div class="wrap">
     <span class="brand"><b>Pigey</b> · physical&nbsp;agency</span>
     <div class="links">
-      <a href="#gap">Gap</a>
+      <a href="#gap">Thesis</a>
+      <a href="#demos">Demos</a>
       <a href="#abstract">Abstract</a>
       <a href="#method">Method</a>
       <a href="#results">Results</a>
-      <a href="#rollouts">Rollouts</a>
+      <!-- <a href="#rollouts">Rollouts</a> -->
       <a href="#cite">Cite</a>
     </div>
   </div>
@@ -290,9 +449,9 @@
 
       <!-- Authors: edit freely; remove for anonymous submission. -->
       <div class="authors">
-        <span class="a">Liane Galanti<sup>1,2</sup></span>
-        <span class="a">Dhruv Shah<sup>1,3</sup></span>
-        <span class="a">Tri Dao<sup>1,2</sup></span>
+        <span class="a"><a href="https://lianegalanti.github.io/" target="_blank" rel="noopener">Liane Galanti</a><sup>1,2</sup></span>
+        <span class="a"><a href="https://robodhruv.github.io/" target="_blank" rel="noopener">Dhruv Shah</a><sup>1,3</sup></span>
+        <span class="a"><a href="https://tridao.me/" target="_blank" rel="noopener">Tri Dao</a><sup>1,2</sup></span>
       </div>
       <div class="affils">
         <span><sup>1</sup>Princeton University</span>
@@ -305,35 +464,28 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg>
           Paper
         </a>
-        <a class="btn" href="#" data-link="arxiv">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
-          arXiv
-        </a>
-        <a class="btn" href="#" data-link="code">
+        <span class="btn soon" data-link="code" title="Code release coming soon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>
-          Code
-        </a>
-        <a class="btn" href="#cite">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4h12v16l-6-3-6 3z"/></svg>
-          BibTeX
-        </a>
+          Code <span class="tag">· coming soon</span>
+        </span>
       </div>
     </div>
 
-    <!-- signature: the orchestrator running its loop -->
-    <aside class="console" aria-label="Orchestration loop animation">
-      <div class="bar">
-        <span class="dot"></span><span class="dot"></span><span class="dot live"></span>
-        <span class="title">orchestrator · live loop</span>
+    <!-- hero media: a real-robot loop, with the orchestrator loop beneath it -->
+    <aside class="hero-media">
+      <div class="hero-vid">
+        <video autoplay muted loop playsinline preload="auto" src="static/videos/hero.mp4?v=6"></video>
       </div>
-      <ul class="loop" id="loop">
-        <li data-step="0"><span class="k">obs</span><span class="v">Perceive — read scene + object labels</span><span class="tag">observe</span></li>
-        <li data-step="1"><span class="k">vlm</span><span class="v">Plan next subgoal from instruction</span><span class="tag">reason</span></li>
-        <li data-step="2"><span class="k">act</span><span class="v">Route to TAMP / VLA, execute subgoal</span><span class="tag">act</span></li>
-        <li data-step="3"><span class="k">chk</span><span class="v">Verify from sensor + wrist image</span><span class="tag">verify</span></li>
-        <li data-step="4"><span class="k">fix</span><span class="v">Retry · escalate · recover on failure</span><span class="tag">recover</span></li>
-      </ul>
-      <div class="foot"><span id="loopstate">subgoal 1 / n</span><span>backends: <b>frozen</b></span></div>
+      <div class="console console-sm" aria-label="Agent reasoning stream">
+        <div class="bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot live"></span>
+          <span class="title">orchestrator · thinking</span>
+        </div>
+        <div class="stream" id="stream">
+          <p class="th"></p>
+          <p class="cl"><span class="p">›</span> <span class="fn"></span><span class="ar"></span></p>
+        </div>
+      </div>
     </aside>
   </div>
 </header>
@@ -352,8 +504,8 @@
         <div class="where">Simulation · LIBERO-PRO</div>
         <h3>12.8% &rarr; 53.3% mean success</h3>
         <div class="bars" data-bars>
-          <div class="barrow"><span class="lab">π<sub>0.5</sub> direct<br>(frozen, alone)</span><div class="track"><div class="fill frozen" data-w="12.8">12.8%</div></div></div>
-          <div class="barrow"><span class="lab">CaP-Agent0</span><div class="track"><div class="fill frozen" data-w="18" style="opacity:.6">18%</div></div></div>
+          <div class="barrow small"><span class="lab">π<sub>0.5</sub> direct<br>(frozen, alone)</span><div class="track"><div class="fill" data-w="12.8">12.8%</div></div></div>
+          <div class="barrow"><span class="lab">CaP-Agent0</span><div class="track"><div class="fill frozen" data-w="18">18%</div></div></div>
           <div class="barrow"><span class="lab" style="color:var(--ours)">Pigey<br>(same weights)</span><div class="track"><div class="fill ours" data-w="53.3">53.3%</div></div></div>
         </div>
         <div class="delta">Over <b>4&times;</b> the frozen policy — new state of the art, weights unchanged.</div>
@@ -361,15 +513,718 @@
 
       <div class="gapcard">
         <div class="where">Real robot · Franka FR3</div>
-        <h3>≈2.5% &rarr; 91.3% on reasoning tasks</h3>
+        <h3>15% &rarr; 97% overall success</h3>
         <div class="bars" data-bars>
-          <div class="barrow small"><span class="lab">π<sub>0.5</sub> direct</span><div class="track"><div class="fill" data-w="2.5">2.5%</div></div></div>
-          <div class="barrow"><span class="lab">TiPToP<br>(open-loop)</span><div class="track"><div class="fill frozen" data-w="28">28%</div></div></div>
-          <div class="barrow"><span class="lab" style="color:var(--ours)">Pigey</span><div class="track"><div class="fill ours" data-w="91.3">91.3%</div></div></div>
+          <div class="barrow small"><span class="lab">π<sub>0.5</sub> direct</span><div class="track"><div class="fill" data-w="15">15%</div></div></div>
+          <div class="barrow"><span class="lab">TiPToP<br>(open-loop)</span><div class="track"><div class="fill frozen" data-w="49">49%</div></div></div>
+          <div class="barrow"><span class="lab" style="color:var(--ours)">Pigey</span><div class="track"><div class="fill ours" data-w="97">97%</div></div></div>
         </div>
         <div class="delta">Gains land on reasoning-limited tasks; already-easy pick-and-place stays at <b>100%</b>.</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ WATCH IT RUN (three demos) ============ -->
+<section class="section" id="demos">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow">Watch it run</span>
+      <h2>Real-robot tasks — watch it <span style="color:var(--ours)">reason</span> in real time.</h2>
+      <p class="intro">Click a task to watch the agent reason through it — the full video alongside its step-by-step trace.</p>
+    </div>
+
+    <div class="gallery reveal">
+      <button class="card featured" data-target="memory-grid"><span class="poster" style="background-image:url(static/posters/memory.jpg)"><span class="view">Watch ▶</span><span class="q">“Memorize the scene, then restore it after a shuffle.”</span></span><span class="cat">Long-horizon memory</span></button>
+      <div class="six">
+        <button class="card" data-target="reason-grid"><span class="poster" style="background-image:url(static/posters/doll.jpg)"><span class="view">Watch ▶</span><span class="q">“Pick up the doll and put it in the basket.”</span></span><span class="cat">Deductive reasoning</span></button>
+        <button class="card" data-target="error-grid"><span class="poster" style="background-image:url(static/posters/error.jpg)"><span class="view">Watch ▶</span><span class="q">“Put the doll on an empty plate — or a bowl.”</span></span><span class="cat">Error recovery</span></button>
+        <button class="card" data-target="occupied-grid"><span class="poster" style="background-image:url(static/posters/occupied.jpg)"><span class="view">Watch ▶</span><span class="q">“Put the doll in the cup.”</span></span><span class="cat">Obstacle reasoning</span></button>
+        <button class="card" data-target="child-grid"><span class="poster" style="background-image:url(static/posters/child.jpg)"><span class="view">Watch ▶</span><span class="q">“A child’s coming over — put what they’d play with in the bowl.”</span></span><span class="cat">Safety reasoning</span></button>
+        <button class="card" data-target="stack-grid"><span class="poster" style="background-image:url(static/posters/stack.jpg)"><span class="view">Watch ▶</span><span class="q">“Stack the containers by size.”</span></span><span class="cat">Spatial reasoning</span></button>
+        <button class="card" data-target="replay-grid"><span class="poster" style="background-image:url(static/posters/replay.jpg)"><span class="view">Watch ▶</span><span class="q">“Watch my demo by hand, then replay it.”</span></span><span class="cat">Imitation learning</span></button>
+      </div>
+    </div>
+
+    <div class="demo-block">
+      <div class="demo-h"><span class="eyebrow">Imitation learning</span><h3>Watch a human demo once, then replay it</h3></div>
+      <div class="reason-grid" id="replay-grid">
+      <div class="reason-video">
+        <div class="vid">
+          <video controls preload="metadata" playsinline src="static/videos/demo.mp4?v=3">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="trace">
+        <div class="trace-instr">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16M4 12h16M4 19h10"/></svg>
+          <span><span class="lab">Task</span><b>“I’ll demo the task by hand, one move at a time. Watch each move. After I reset the scene and my hands leave, replay exactly what I demonstrated.”</b></span>
+        </div>
+
+        <div class="steps">
+          <button class="step" data-t="0">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe<span class="time">0:00</span></span>
+              <span class="step-title">Watch the demonstration</span>
+              <span class="step-thought">“You’re showing me the task by hand, one move at a time. I’ll watch and record each move into an ordered sequence.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Perceive</span>()<span class="res">→ recording demonstration</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="2">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe · record<span class="time">0:02</span></span>
+              <span class="step-title">Record move 1</span>
+              <span class="step-thought">“You put the elephant doll into the blue bowl — move logged.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Record</span>(<span class="arg">elephant doll → blue bowl</span>)</span>
+            </span>
+          </button>
+
+          <button class="step" data-t="10">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe · record<span class="time">0:10</span></span>
+              <span class="step-title">Record move 2</span>
+              <span class="step-thought">“Next, the tape into the basket — logged.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Record</span>(<span class="arg">tape → basket</span>)</span>
+            </span>
+          </button>
+
+          <button class="step" data-t="19">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe · record<span class="time">0:19</span></span>
+              <span class="step-title">Record move 3</span>
+              <span class="step-thought">“Then the block into the green bowl — logged.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Record</span>(<span class="arg">block → green bowl</span>)</span>
+            </span>
+          </button>
+
+          <button class="step" data-t="22">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe · record<span class="time">0:22</span></span>
+              <span class="step-title">Record move 4</span>
+              <span class="step-thought">“Last, the yellow bottle into the basket — logged.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Record</span>(<span class="arg">yellow bottle → basket</span>)</span>
+            </span>
+          </button>
+
+          <button class="step" data-t="32">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe<span class="time">0:32</span></span>
+              <span class="step-title">Scene reset</span>
+              <span class="step-thought">“You’ve put everything back to the start and your hands have left the frame. That’s my cue — my turn.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Perceive</span>()<span class="res">→ scene reset · hands clear</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="44">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">reason<span class="time">0:44</span></span>
+              <span class="step-title">Replay the sequence</span>
+              <span class="step-thought">“I’ll reproduce the demonstration exactly, in the same order I recorded it.”</span>
+            </span>
+          </button>
+
+          <button class="step" data-t="48">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:48</span></span>
+              <span class="step-title">Replay move 1</span>
+              <span class="step-thought">“Elephant doll into the blue bowl.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">elephant doll</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">blue bowl</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="66">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">1:06</span></span>
+              <span class="step-title">Replay move 2</span>
+              <span class="step-thought">“Tape into the basket.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">tape</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">basket</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="92">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">1:32</span></span>
+              <span class="step-title">Replay move 3</span>
+              <span class="step-thought">“Block into the green bowl.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">block</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">green bowl</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="123">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">2:03</span></span>
+              <span class="step-title">Replay move 4</span>
+              <span class="step-thought">“Yellow bottle into the basket.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">yellow bottle</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">basket</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="147">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">done<span class="time">2:27</span></span>
+              <span class="step-title">Demonstration replayed</span>
+              <span class="step-thought">“Sequence reproduced — the scene matches what you demonstrated.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Done</span>()<span class="res">→ matches demonstration ✓</span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="demo-block">
+      <div class="demo-h"><span class="eyebrow">Deductive reasoning</span><h3>Reason about a hidden object</h3></div>
+      <div class="reason-grid" id="reason-grid">
+      <div class="reason-video">
+        <div class="vid">
+          <video controls preload="metadata" playsinline src="static/videos/doll.mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="trace">
+        <div class="trace-instr">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16M4 12h16M4 19h10"/></svg>
+          <span><span class="lab">Task</span><b>“Pick up the doll and put it in the basket.”</b></span>
+        </div>
+
+        <div class="steps">
+          <button class="step" data-t="0">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe<span class="time">0:00</span></span>
+              <span class="step-title">Read the scene</span>
+              <span class="step-thought">“I scan the table — a container, a pumpkin toy, blocks, a cable, and the basket. But I don’t see a doll anywhere.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Perceive</span>()<span class="res">→ container, pumpkin toy, blocks, cable, basket · doll: not found</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="4">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">reason<span class="time">0:04</span></span>
+              <span class="step-title">Where is the doll?</span>
+              <span class="step-thought">“Could they mean the pumpkin toy? It’s a toy — but not a doll, so that’s not it. The doll must be out of view, maybe hidden. The container is the only thing it could be under, so let me check there first.”</span>
+            </span>
+          </button>
+
+          <button class="step" data-t="5">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:05</span></span>
+              <span class="step-title">Lift the container</span>
+              <span class="step-thought">“Let me grasp the container and see what’s underneath.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">"container"</span>)<span class="res">→ grasp confirmed</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="13">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:13</span></span>
+              <span class="step-title">Set it aside</span>
+              <span class="step-thought">“I’ll set the container aside to clear the area.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Place</span>(<span class="arg">"table"</span>)<span class="res">→ container set aside · area cleared</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="16">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe<span class="time">0:16</span></span>
+              <span class="step-title">Found it</span>
+              <span class="step-thought">“The doll was hidden under the container — let me re-ground the scene now that it’s visible.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Perceive</span>()<span class="res">→ doll now visible</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="20">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">reason<span class="time">0:20</span></span>
+              <span class="step-title">Resume the goal</span>
+              <span class="step-thought">“Obstacle cleared. Back to the original task: grasp the doll.”</span>
+            </span>
+          </button>
+
+          <button class="step" data-t="27">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:27</span></span>
+              <span class="step-title">Grasp the doll</span>
+              <span class="step-thought">“Now I’ll pick up the doll — grasp confirmed by the gripper sensor and wrist camera.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">"doll"</span>)<span class="res">→ grasp confirmed</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="39">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:39</span></span>
+              <span class="step-title">Place in the basket</span>
+              <span class="step-thought">“I’ll carry the doll over and release it into the basket.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Place</span>(<span class="arg">"basket"</span>)<span class="res">→ doll released</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="44">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">done<span class="time">0:44</span></span>
+              <span class="step-title">Goal satisfied</span>
+              <span class="step-thought">“A final look confirms the doll is in the basket — task complete.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Done</span>()<span class="res">→ goal satisfied ✓</span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="demo-block">
+      <div class="demo-h"><span class="eyebrow">Long-horizon memory</span><h3>Memorize a scene, then restore it after a shuffle</h3></div>
+      <div class="reason-grid tall" id="memory-grid">
+      <div class="reason-video">
+        <div class="vid">
+          <video controls preload="metadata" playsinline src="static/videos/mem.mp4?v=2">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="trace">
+        <div class="trace-instr">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16M4 12h16M4 19h10"/></svg>
+          <span><span class="lab">Task</span><b>“Memorize the scene, look away while I shuffle it, then restore every object to where it was.”</b></span>
+        </div>
+
+        <div class="steps">
+          <button class="step" data-t="0" data-mem="write">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe<span class="time">0:00</span></span>
+              <span class="step-title">Memorize the scene</span>
+              <span class="step-thought">“Five similar plush dolls — a pink rabbit, a brown elephant, a dotted doll, a brown cow, and a blue elephant. I record exactly where each one sits.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Perceive</span>()<span class="res">→ 5 dolls localized · positions stored to memory</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="12">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe<span class="time">0:12</span></span>
+              <span class="step-title">Look away</span>
+              <span class="step-thought">“The side camera is covered — that’s my cue to look away. I’ll hold still and won’t peek while you shuffle.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Perceive</span>()<span class="res">→ side camera blocked · waiting</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="28">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe<span class="time">0:28</span></span>
+              <span class="step-title">Look back</span>
+              <span class="step-thought">“The camera’s clear again. Let me re-read the table and see what changed.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Perceive</span>()<span class="res">→ layout changed since memorizing</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="38">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">reason<span class="time">0:38</span></span>
+              <span class="step-title">Compare to memory</span>
+              <span class="step-thought">“Comparing to what I stored: several dolls are in the wrong places. I’ll return each one to its remembered pose, one at a time.”</span>
+            </span>
+          </button>
+
+          <button class="step" data-t="46" data-doll="brown-elephant">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:46</span></span>
+              <span class="step-title">Restore the brown elephant</span>
+              <span class="step-thought">“The brown elephant’s spot is free — I’ll put it back first.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">brown elephant</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">memory["brown elephant"]</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="78" data-doll="blue-elephant">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">1:18</span></span>
+              <span class="step-title">Move the blue elephant first</span>
+              <span class="step-thought">“The brown cow’s spot is blocked by the blue elephant — I’ll return the blue elephant first.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">blue elephant</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">memory["blue elephant"]</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="105" data-doll="brown-cow">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">1:45</span></span>
+              <span class="step-title">Restore the brown cow</span>
+              <span class="step-thought">“The blue elephant’s home, so the brown cow’s spot is clear now — placing it.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">brown cow</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">memory["brown cow"]</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="138" data-doll="dotted-doll">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">2:18</span></span>
+              <span class="step-title">Restore the dotted doll</span>
+              <span class="step-thought">“The dotted doll’s spot is free — putting it back.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">dotted doll</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">memory["dotted doll"]</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="170" data-doll="pink-rabbit">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">2:50</span></span>
+              <span class="step-title">Restore the pink rabbit</span>
+              <span class="step-thought">“Finishing the last placements — putting the pink rabbit back.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">pink rabbit</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">memory["pink rabbit"]</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="198">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">done<span class="time">3:18</span></span>
+              <span class="step-title">Scene restored</span>
+              <span class="step-thought">“Every doll is back where it began — the table matches what I memorized.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Done</span>()<span class="res">→ scene matches memory ✓</span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="demo-block">
+      <div class="demo-h"><span class="eyebrow">Spatial reasoning</span><h3>Build a stable stack, largest to smallest</h3></div>
+      <div class="reason-grid" id="stack-grid">
+      <div class="reason-video">
+        <div class="vid">
+          <video controls preload="metadata" playsinline src="static/videos/stack.mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="trace">
+        <div class="trace-instr">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16M4 12h16M4 19h10"/></svg>
+          <span><span class="lab">Task</span><b>“Stack the containers by size — every piece in one stack.”</b></span>
+        </div>
+
+        <div class="steps">
+          <button class="step" data-t="0">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe<span class="time">0:00</span></span>
+              <span class="step-title">Read the scene</span>
+              <span class="step-thought">“A basket and three nesting pieces — two blue bowls and a small orange container. The blues look close in size, but the darker one is clearly the largest.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Perceive</span>()<span class="res">→ basket + 3 objects, ordered by size</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="1">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">reason<span class="time">0:01</span></span>
+              <span class="step-title">Plan the order</span>
+              <span class="step-thought">“I’ll stack largest to smallest — big blue, then medium blue, then orange. Going large→small lets each piece nest inside the one below for a low, stable base. Small→large would set a big bowl on a small one — top-heavy, won’t nest, and likely to topple and scatter. Large-first makes less mess.”</span>
+            </span>
+          </button>
+
+          <button class="step" data-t="2">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:02</span></span>
+              <span class="step-title">Place the large blue bowl</span>
+              <span class="step-thought">“Largest first — into the basket as the base.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">large blue bowl</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">basket</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="29">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:29</span></span>
+              <span class="step-title">Place the medium blue bowl</span>
+              <span class="step-thought">“Medium next — it nests inside the large one.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">medium blue bowl</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">stack</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="54">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:54</span></span>
+              <span class="step-title">Place the orange container</span>
+              <span class="step-thought">“Smallest last — on top of the stack.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">orange container</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">stack</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="75">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">done<span class="time">1:15</span></span>
+              <span class="step-title">Stacked by size</span>
+              <span class="step-thought">“All three nested in the basket, largest to smallest — stable, nothing spilled.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Done</span>()<span class="res">→ fully stacked ✓</span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="demo-block">
+      <div class="demo-h"><span class="eyebrow">Safety reasoning</span><h3>Put the kid-safe toys in the bowl, keep the hazards out</h3></div>
+      <div class="reason-grid" id="child-grid">
+      <div class="reason-video">
+        <div class="vid">
+          <video controls preload="metadata" playsinline src="static/videos/child.mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="trace">
+        <div class="trace-instr">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16M4 12h16M4 19h10"/></svg>
+          <span><span class="lab">Task</span><b>“A child is coming over — put everything they’d want to play with in the bowl.”</b></span>
+        </div>
+
+        <div class="steps">
+          <button class="step" data-t="0">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe<span class="time">0:00</span></span>
+              <span class="step-title">Read the scene</span>
+              <span class="step-thought">“On the table: a doll, a block, a screwdriver, and cables — and the bowl already has a glue stick sitting in it.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Perceive</span>()<span class="res">→ bowl (glue inside) · doll, block, screwdriver, cables</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="0.5">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">reason<span class="time">0:00</span></span>
+              <span class="step-title">Safe vs. dangerous</span>
+              <span class="step-thought">“A child should only get the doll and the block. The glue, screwdriver, and cables are hazards — keep them out. But the bowl already holds the glue, so that has to come out first.”</span>
+            </span>
+          </button>
+
+          <button class="step" data-t="1">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:01</span></span>
+              <span class="step-title">Clear the glue from the bowl</span>
+              <span class="step-thought">“The glue is dangerous and it’s in the bowl — take it out and set it on the table.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">glue</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">table</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="21">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:21</span></span>
+              <span class="step-title">Put the doll in the bowl</span>
+              <span class="step-thought">“The doll is safe to play with — into the bowl.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">doll</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">bowl</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="42">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:42</span></span>
+              <span class="step-title">Put the block in the bowl</span>
+              <span class="step-thought">“The block is safe too — into the bowl.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">block</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">bowl</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="66">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">verify · done<span class="time">1:06</span></span>
+              <span class="step-title">Verify the bowl</span>
+              <span class="step-thought">“The bowl now holds only the kid-safe toys — the doll and the block. Glue, screwdriver, and cables are all out. Safe for the child.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Done</span>()<span class="res">→ only kid-safe toys in the bowl ✓</span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="demo-block">
+      <div class="demo-h"><span class="eyebrow">Obstacle reasoning</span><h3>Empty the occupied cup, then place the doll</h3></div>
+      <div class="reason-grid" id="occupied-grid">
+      <div class="reason-video">
+        <div class="vid">
+          <video controls preload="metadata" playsinline src="static/videos/occupied.mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="trace">
+        <div class="trace-instr">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16M4 12h16M4 19h10"/></svg>
+          <span><span class="lab">Task</span><b>“Put the doll in the cup.”</b></span>
+        </div>
+
+        <div class="steps">
+          <button class="step" data-t="0">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe<span class="time">0:00</span></span>
+              <span class="step-title">Read the scene</span>
+              <span class="step-thought">“I need to put the doll in the cup — but the cup isn’t empty. There’s a computer mouse sitting in it.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Perceive</span>()<span class="res">→ cup (computer mouse inside) · doll on the table</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="0.5">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">reason<span class="time">0:00</span></span>
+              <span class="step-title">Clear it first</span>
+              <span class="step-thought">“The target is occupied. I can’t drop the doll on top of the computer mouse — I have to take it out first, then the cup is free.”</span>
+            </span>
+          </button>
+
+          <button class="step" data-t="2">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:02</span></span>
+              <span class="step-title">Take the mouse out</span>
+              <span class="step-thought">“Lift the computer mouse out of the cup and set it on the table.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">computer mouse</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">table</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="27">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:27</span></span>
+              <span class="step-title">Put the doll in the cup</span>
+              <span class="step-thought">“The cup’s free now — place the doll inside.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">doll</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">cup</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="50">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">done<span class="time">0:50</span></span>
+              <span class="step-title">Doll in the cup</span>
+              <span class="step-thought">“The doll is in the cup, and the computer mouse is set aside. Done.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Done</span>()<span class="res">→ doll in the cup ✓</span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="demo-block">
+      <div class="demo-h"><span class="eyebrow">Error recovery</span><h3>The plate gets occupied mid-task — fall back to a bowl</h3></div>
+      <div class="reason-grid" id="error-grid">
+      <div class="reason-video">
+        <div class="vid">
+          <video controls preload="metadata" playsinline src="static/videos/error.mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </div>
+
+      <div class="trace">
+        <div class="trace-instr">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16M4 12h16M4 19h10"/></svg>
+          <span><span class="lab">Task</span><b>“Put the doll on an empty plate. If there’s no empty plate, put it in an empty bowl.”</b></span>
+        </div>
+
+        <div class="steps">
+          <button class="step" data-t="0">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe<span class="time">0:00</span></span>
+              <span class="step-title">Read the scene</span>
+              <span class="step-thought">“The plate is empty, and there are two bowls. The rule says use an empty plate first — so I’ll put the doll on the plate.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Perceive</span>()<span class="res">→ plate empty · doll · green bowl empty · blue bowl (block)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="2">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:02</span></span>
+              <span class="step-title">Bring the doll to the plate</span>
+              <span class="step-thought">“Plate’s empty — pick up the doll and take it over to the plate.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">doll</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">plate</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="27">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">observe · recover<span class="time">0:27</span></span>
+              <span class="step-title">The plate isn’t empty anymore</span>
+              <span class="step-thought">“Wait — a glue bottle just appeared on the plate. It’s no longer empty, so the plate is out. Per the rule, fall back to an empty bowl — the green one is free (the blue already holds a block).”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Perceive</span>()<span class="res">→ plate now occupied (glue) · green bowl still empty</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="40">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">act<span class="time">0:40</span></span>
+              <span class="step-title">Redirect to the empty bowl</span>
+              <span class="step-thought">“Move the doll to the empty green bowl instead.”</span>
+              <span class="step-call"><span class="cl"><span class="p">›</span> <span class="fn">Pick</span>(<span class="arg">doll</span>)</span><span class="cl"><span class="fn">Place</span>(<span class="arg">green bowl</span>)</span></span>
+            </span>
+          </button>
+
+          <button class="step" data-t="49">
+            <span class="step-rail"><span class="dot"></span></span>
+            <span class="step-body">
+              <span class="step-tag">done<span class="time">0:49</span></span>
+              <span class="step-title">Doll in the bowl</span>
+              <span class="step-thought">“The doll’s in the empty bowl — recovered from the change mid-task and still satisfied the goal.”</span>
+              <span class="step-call"><span class="p">›</span> <span class="fn">Done</span>()<span class="res">→ doll in the empty bowl ✓</span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="demo-backdrop" id="demoBackdrop"></div>
+    <button class="modal-close" id="demoClose" aria-label="Close">✕</button>
   </div>
 </section>
 
@@ -378,7 +1233,7 @@
   <div class="wrap">
     <div class="head reveal"><span class="eyebrow">Abstract</span></div>
     <div class="abstract reveal">
-      <p class="drop">General-purpose robots must combine perception, world knowledge, planning, success detection, recovery, and low-level control. Today’s state-of-the-art models try to fold all of this into one learned policy via large-scale pre-training. We show instead that these capabilities decompose into a general language-conditioned control agent and a high-level agent manager. Rather than training policies to reason, we build a closed-loop physical-agency orchestrator — <strong>Pigey</strong> — that plans high level, decomposes goals into achievable subgoals, commands low-level motor skills, verifies outcomes from observations, and recovers from failures. It controls <em>existing</em> vision-language-action policies and parametrized skills to solve complex reasoning tasks in the real world, with no extra data collection or post-training. On LIBERO-PRO, Pigey advances the state of the art by over 4× (12.8% → 53.3%) with no task-specific fine-tuning; on a real robot it lifts a frozen policy from near-zero to over 90% on reasoning-limited tasks. We call the difference between what frozen skills achieve alone and inside the agentic loop the <em>orchestration gap</em>.</p>
+      <p class="drop">General-purpose robots must combine perception, world knowledge, planning, success detection, recovery, and low-level control. Today’s state-of-the-art models try to fold all of this into one learned policy via large-scale pre-training. We show instead that these capabilities decompose into a general language-conditioned control agent and a high-level agent manager. Rather than training policies to reason, we build a closed-loop physical-agency orchestrator — <strong style="color:var(--ours)">Pigey</strong> — that plans high level, decomposes goals into achievable subgoals, commands low-level motor skills, verifies outcomes from observations, and recovers from failures. It controls <em>existing</em> vision-language-action policies and parametrized skills to solve complex reasoning tasks in the real world, with no extra data collection or post-training. On LIBERO-PRO, <span style="color:var(--ours)">Pigey</span> advances the state of the art by over 4× (12.8% → 53.3%) with no task-specific fine-tuning; on a real robot it lifts a frozen policy from near-zero to over 90% on reasoning-limited tasks. We call the difference between what frozen skills achieve alone and inside the agentic loop the <em>orchestration gap</em>.</p>
     </div>
   </div>
 </section>
@@ -389,10 +1244,11 @@
     <div class="head reveal">
       <span class="eyebrow">How it works</span>
       <h2>A frontier VLM runs the task-level loop over two frozen backends.</h2>
-      <p class="intro">The orchestrator never emits motor commands. At each step it reads the observation and history, calls one tool, incorporates the result, and decides again — until the task predicate holds or the step budget runs out. Motion is delegated to skills it never trained.</p>
+      <p class="intro">The orchestrator never emits motor commands. At each step it reads the observation and history, calls one tool, incorporates the result, and decides again — until the task predicate holds. Motion is delegated to skills it never trained.</p>
     </div>
 
     <div class="reveal">
+      <!-- tool cards hidden for now — the diagram below already shows the API (Perceive/Pick/Place/VLARollout/Done)
       <div class="tools">
         <div class="tool"><div class="name"><b>Perceive</b>()</div><div class="desc">Returns camera views, robot state, and the set of detected object labels — the agent’s grounded vocabulary.</div></div>
         <div class="tool"><div class="name"><b>Pick</b>(ℓ)</div><div class="desc">Grasp a labeled object via the TAMP backend; sensor-verified before any place.</div></div>
@@ -400,13 +1256,8 @@
         <div class="tool"><div class="name"><b>VLARollout</b>(s)</div><div class="desc">Run the frozen π<sub>0.5</sub> VLA on a short subgoal — deformables, contact-rich, recovery.</div></div>
         <div class="tool"><div class="name"><b>Done</b>()</div><div class="desc">Terminate — only after a final Perceive confirms the goal state.</div></div>
       </div>
+      -->
 
-      <div class="pillrow">
-        <span class="pill"><b>Route</b> rigid → TAMP · deformable/in-container → VLA</span>
-        <span class="pill"><b>Verify</b> gripper sensor + wrist image, conservatively combined</span>
-        <span class="pill"><b>Recover</b> retry once → escalate → re-perceive &amp; re-plan</span>
-        <span class="pill"><b>Remember</b> what’s held, placed, and still remaining</span>
-      </div>
 
       <figure class="diagram">
         <!-- Hand-drawn schematic. To use your own render instead, replace this <svg> with <img src="static/diagram.png">. -->
@@ -421,31 +1272,40 @@
           <rect class="panel" x="40" y="22" width="620" height="48" rx="12"/>
           <text class="t-ey" x="58" y="42">INSTRUCTION</text>
           <text class="t-tool" x="58" y="61" style="font-size:12px">“A kid is visiting — put the toys on the plate, unsafe items in the box.”</text>
-          <path class="flow" d="M250,70 C250,90 232,96 232,114" marker-end="url(#aH)"/>
 
           <!-- orchestrator panel -->
           <rect class="panel" x="40" y="100" width="392" height="392" rx="16"/>
           <text class="t-ey" x="64" y="126">FRONTIER VLM · ORCHESTRATOR</text>
 
           <!-- stages -->
-          <rect class="node" x="100" y="132" width="264" height="52" rx="10"/>
-          <text class="t-node" x="232" y="153">Perceive</text>
-          <text class="t-mono" x="232" y="171">scene + object labels</text>
+          <g class="stage">
+            <rect class="node" x="100" y="132" width="264" height="52" rx="10"/>
+            <text class="t-node" x="232" y="153">Perceive</text>
+            <text class="t-mono" x="232" y="171">scene + object labels</text>
+          </g>
 
-          <rect class="node" x="100" y="202" width="264" height="52" rx="10"/>
-          <text class="t-node" x="232" y="223">Reason</text>
-          <text class="t-mono" x="232" y="241">plan next subgoal</text>
+          <g class="stage">
+            <rect class="node" x="100" y="202" width="264" height="52" rx="10"/>
+            <text class="t-node" x="232" y="223">Reason</text>
+            <text class="t-mono" x="232" y="241">plan next subgoal</text>
+          </g>
 
-          <rect class="node" x="100" y="272" width="264" height="52" rx="10"/>
-          <text class="t-node" x="232" y="293">Act</text>
-          <text class="t-mono" x="232" y="311">select &amp; call a backend</text>
+          <g class="stage">
+            <rect class="node" x="100" y="272" width="264" height="52" rx="10"/>
+            <text class="t-node" x="232" y="293">Act</text>
+            <text class="t-mono" x="232" y="311">select &amp; call a backend</text>
+          </g>
 
-          <rect class="node" x="100" y="342" width="264" height="52" rx="10"/>
-          <text class="t-node" x="232" y="363">Verify</text>
-          <text class="t-mono" x="232" y="381">is_grasped + wrist image</text>
+          <g class="stage">
+            <rect class="node" x="100" y="342" width="264" height="52" rx="10"/>
+            <text class="t-node" x="232" y="363">Verify</text>
+            <text class="t-mono" x="232" y="381">is_grasped + wrist image</text>
+          </g>
 
-          <rect class="ours-fill" x="142" y="414" width="180" height="44" rx="10"/>
-          <text class="t-white" x="232" y="441">Done ✓</text>
+          <g class="done-node">
+            <rect class="ours-fill" x="142" y="414" width="180" height="44" rx="10"/>
+            <text class="t-white" x="232" y="441">Done ✓</text>
+          </g>
           <text class="note" x="64" y="480">closed loop · no motor weights live here</text>
 
           <!-- stage-to-stage arrows -->
@@ -459,19 +1319,23 @@
           <text class="lab" x="60" y="270" transform="rotate(-90 60 270)" style="fill:var(--ours)">recover · retry · escalate</text>
 
           <!-- frozen backends -->
-          <rect class="frozen-box" x="560" y="150" width="360" height="140" rx="14"/>
-          <text class="t-title" x="584" y="183">TAMP backend</text>
-          <rect class="tagpill" x="836" y="165" width="62" height="22" rx="11"/>
-          <text class="frozen-tag" x="867" y="180">FROZEN</text>
-          <text class="t-tool" x="584" y="212">Pick(ℓ)&#160;&#160;·&#160;&#160;Place(ℓ)</text>
-          <text class="t-desc" x="584" y="238">rigid pick-and-place, grasp planning</text>
+          <g class="backend">
+            <rect class="frozen-box" x="560" y="150" width="360" height="140" rx="14"/>
+            <text class="t-title" x="584" y="183">TAMP backend</text>
+            <rect class="tagpill" x="836" y="165" width="62" height="22" rx="11"/>
+            <text class="frozen-tag" x="867" y="180">FROZEN</text>
+            <text class="t-tool" x="584" y="212">Pick(ℓ)&#160;&#160;·&#160;&#160;Place(ℓ)</text>
+            <text class="t-desc" x="584" y="238">rigid pick-and-place, grasp planning</text>
+          </g>
 
-          <rect class="frozen-box" x="560" y="320" width="360" height="140" rx="14"/>
-          <text class="t-title" x="584" y="353">π<tspan font-size="10" dy="3">0.5</tspan><tspan dy="-3"> VLA backend</tspan></text>
-          <rect class="tagpill" x="836" y="335" width="62" height="22" rx="11"/>
-          <text class="frozen-tag" x="867" y="350">FROZEN</text>
-          <text class="t-tool" x="584" y="382">VLARollout(s)</text>
-          <text class="t-desc" x="584" y="408">deformable · contact-rich control</text>
+          <g class="backend">
+            <rect class="frozen-box" x="560" y="320" width="360" height="140" rx="14"/>
+            <text class="t-title" x="584" y="353">π<tspan font-size="10" dy="3">0.5</tspan><tspan dy="-3"> VLA backend</tspan></text>
+            <rect class="tagpill" x="836" y="335" width="62" height="22" rx="11"/>
+            <text class="frozen-tag" x="867" y="350">FROZEN</text>
+            <text class="t-tool" x="584" y="382">VLARollout(s)</text>
+            <text class="t-desc" x="584" y="408">deformable · contact-rich control</text>
+          </g>
 
           <!-- call: Act -> both frozen backends (solid, orthogonal) -->
           <path class="flow-s" d="M364,292 H505 V205 H556" marker-end="url(#aHs)"/>
@@ -506,31 +1370,31 @@
       <h2>Same frozen weights. Only the inference-time process changes.</h2>
     </div>
 
-    <div class="twocol reveal">
+    <div class="reveal" style="display:grid; grid-template-columns:1.5fr 1fr; gap:24px; align-items:start">
       <div>
         <div class="tablewrap">
           <table>
-            <caption><b>LIBERO-PRO</b> success rate (%) across six perturbation suites. One frozen π<sub>0.5</sub>-LIBERO policy throughout.</caption>
+            <caption><b>LIBERO-PRO</b> success rate (%) across the six perturbation suites. One frozen π<sub>0.5</sub>-LIBERO policy throughout; our reasoner is Claude Opus 4.7.</caption>
             <thead>
-              <tr><th>Method</th><th>Obj-swap</th><th>Sp-task</th><th>Goal</th><th class="ours">Mean</th></tr>
+              <tr><th>Method</th><th>Obj-swap</th><th>Obj-task</th><th>Sp-swap</th><th>Sp-task</th><th>Goal-swap</th><th>Goal-task</th><th class="ours">Mean</th></tr>
             </thead>
             <tbody>
-              <tr><td>π<sub>0</sub>-LIBERO</td><td>0</td><td>0</td><td>0</td><td class="ours">0</td></tr>
-              <tr><td>π<sub>0.5</sub>-LIBERO</td><td>17</td><td>1</td><td>38</td><td class="ours">12.8</td></tr>
-              <tr><td>CaP-Agent0</td><td>22</td><td>14</td><td>26</td><td class="ours">18</td></tr>
-              <tr class="total"><td>Pigey (ours)</td><td>54</td><td>80</td><td>44</td><td class="ours">53.3</td></tr>
+              <tr><td>π<sub>0</sub>-LIBERO</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td class="ours">0</td></tr>
+              <tr><td>π<sub>0.5</sub>-LIBERO</td><td>17</td><td>1</td><td>20</td><td>1</td><td>38</td><td>0</td><td class="ours">12.8</td></tr>
+              <tr><td>CaP-Agent0</td><td>22</td><td>18</td><td>12</td><td>14</td><td>26</td><td>17</td><td class="ours">18</td></tr>
+              <tr class="total"><td><span style="color:var(--ours)">Pigey</span> (ours)</td><td>54</td><td>54</td><td>66</td><td>80</td><td>44</td><td>22</td><td class="ours">53.3</td></tr>
             </tbody>
           </table>
         </div>
-        <p class="tnote">Representative columns shown; full six-suite table in the paper. 9-reasoner sweep in the appendix.</p>
+        <!-- <p class="tnote">Representative columns shown; full six-suite table in the paper. 9-reasoner sweep in the appendix.</p> -->
       </div>
 
       <div>
         <div class="tablewrap">
           <table>
-            <caption><b>Real robot</b> success rate (%) by capability probe. Same π<sub>0.5</sub>-DROID weights throughout.</caption>
+            <caption><b>Real robot</b> success rate (%) by capability probe. Same π<sub>0.5</sub>-DROID weights throughout; our reasoner is Claude Opus 4.7.</caption>
             <thead>
-              <tr><th>Category</th><th>π<sub>0.5</sub></th><th>TiPToP</th><th class="ours">Pigey</th></tr>
+              <tr><th>Category</th><th>π<sub>0.5</sub></th><th>TiPToP</th><th class="ours"><span style="color:var(--ours)">Pigey</span></th></tr>
             </thead>
             <tbody>
               <tr><td>World knowledge</td><td>0</td><td>90</td><td class="ours">100</td></tr>
@@ -545,19 +1409,19 @@
             </tbody>
           </table>
         </div>
-        <p class="tnote">30 tasks · 5 trials each · Claude Opus 4.7 as the reasoner.</p>
+        <!-- <p class="tnote">30 tasks · 5 trials each · Claude Opus 4.7 as the reasoner.</p> -->
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ ROLLOUTS ============ -->
+<!-- ============ ROLLOUTS — hidden for now ============
 <section class="section" id="rollouts">
   <div class="wrap">
     <div class="head reveal">
       <span class="eyebrow">Rollouts</span>
       <h2>One instruction, the loop carries the hard part.</h2>
-      <p class="intro">Each row is a single real-robot execution, with Pigey’s per-frame reasoning below each frame. Drop your exported frames into <code>static/rollouts/</code>.</p>
+      <p class="intro">Each row is a single real-robot execution, with Pigey’s per-frame reasoning below each frame.</p>
     </div>
 
     <div class="roll reveal">
@@ -593,6 +1457,7 @@
     </div>
   </div>
 </section>
+-->
 
 <!-- ============ CITE ============ -->
 <section class="section" id="cite">
@@ -611,34 +1476,151 @@
 
 <footer>
   <div class="wrap">
-    <span>Pigey · Towards Physical Agency</span>
-    <span>Page template — edit links in <code>data-link</code> &amp; drop assets in <code>static/</code></span>
+    <span><b style="color:var(--ours)">Pigey</b> © 2026</span>
+    <!-- <span>Page template — edit links in <code>data-link</code> &amp; drop assets in <code>static/</code></span> -->
   </div>
 </footer>
 
 <script>
-  /* ---- loop animation: walk the cycle, mark done, restart ---- */
+  /* ---- hero reasoning stream: cycle the agent's real thoughts ---- */
   (function(){
-    const items = [...document.querySelectorAll('#loop li')];
-    const state = document.getElementById('loopstate');
-    if(!items.length) return;
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){ items.forEach(i=>i.classList.add('done')); return; }
-    let step = 0, subgoal = 1;
+    const stream = document.getElementById('stream');
+    if(!stream) return;
+    const th = stream.querySelector('.th'), cl = stream.querySelector('.cl');
+    const items = [
+      {t:'“The doll isn’t on the table — maybe it’s hidden. Let me check under the container.”', fn:'Pick', a:'"container"'},
+      {t:'“The plate’s occupied now — a glue bottle appeared. Fall back to an empty bowl.”', fn:'Place', a:'doll, "bowl"'},
+      {t:'“The cup isn’t empty — there’s a computer mouse in it. Take it out first.”', fn:'Pick', a:'"computer mouse"'},
+      {t:'“Stack largest to smallest, so each piece nests on a stable base.”', fn:'Place', a:'"blue bowl", "basket"'},
+      {t:'“A child’s coming — the doll and block are safe, but the glue has to leave the bowl.”', fn:'Pick', a:'"glue"'},
+      {t:'“I memorized every doll’s spot. The blue one blocks the brown cow’s — move it first.”', fn:'Place', a:'memory["blue elephant"]'}
+    ];
+    let k = 0;
+    function render(){
+      const it = items[k];
+      th.textContent = it.t;
+      cl.innerHTML = '<span class="p">›</span> <span class="fn">' + it.fn + '</span>(<span class="ar">' + it.a + '</span>)';
+    }
+    render();
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    setInterval(function(){
+      stream.classList.add('fade');
+      setTimeout(function(){ k = (k + 1) % items.length; render(); stream.classList.remove('fade'); }, 420);
+    }, 3400);
+  })();
+
+  /* ---- demo gallery: open a card's video+trace in a modal ---- */
+  (function(){
+    const cards = [...document.querySelectorAll('.card[data-target]')];
+    const backdrop = document.getElementById('demoBackdrop');
+    const closeBtn = document.getElementById('demoClose');
+    if(!cards.length || !backdrop || !closeBtn) return;
+    let openBlock = null;
+    function close(){
+      if(openBlock){
+        const v = openBlock.querySelector('video');
+        if(v) v.pause();
+        openBlock.classList.remove('open');
+        openBlock = null;
+      }
+      backdrop.classList.remove('open');
+      closeBtn.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function open(target){
+      const grid = document.getElementById(target);
+      const block = grid && grid.closest('.demo-block');
+      if(!block) return;
+      close();
+      openBlock = block;
+      block.classList.add('open');
+      block.scrollTop = 0;
+      backdrop.classList.add('open');
+      closeBtn.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      const v = grid.querySelector('video');
+      if(v){ try{ v.currentTime = 0; }catch(e){} const p = v.play(); if(p && p.catch) p.catch(()=>{}); }
+    }
+    cards.forEach(c => c.addEventListener('click', ()=> open(c.dataset.target)));
+    backdrop.addEventListener('click', close);
+    closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', e => { if(e.key === 'Escape') close(); });
+  })();
+
+  /* ---- architecture diagram: animates the loop on its own ---- */
+  (function(){
+    const arch = document.querySelector('.arch');
+    if(!arch) return;
+    const stages = [...arch.querySelectorAll('.stage')];
+    const backends = [...arch.querySelectorAll('.backend')];
+    const doneNode = arch.querySelector('.done-node');
+    if(!stages.length) return;
+    const LOOPS = 3;                            // loops before the task "completes"
+    const total = stages.length * LOOPS + 1;    // +1 frame for Done
+    let t = 0, pick = 0;
     function tick(){
-      items.forEach(i=>i.classList.remove('on'));
-      // mark already-passed as done within this subgoal
-      items.forEach((i,idx)=> i.classList.toggle('done', idx < step));
-      const cur = items[step];
-      cur.classList.add('on');
-      // recover step only "fires" occasionally
-      state.textContent = 'subgoal ' + subgoal + (step===4 ? ' · recovering' : '');
-      step++;
-      if(step >= items.length){
-        setTimeout(()=>{ items.forEach(i=>i.classList.remove('done','on')); step=0; subgoal++; if(subgoal>4) subgoal=1; }, 900);
+      const pos = t % total;
+      stages.forEach(s=> s.classList.remove('lit'));
+      backends.forEach(b=> b.classList.remove('lit'));
+      if(doneNode) doneNode.classList.remove('lit');
+      if(pos < stages.length * LOOPS){
+        const si = pos % stages.length;
+        stages[si].classList.add('lit');
+        // choose a random backend when "Act" starts; keep it lit through Verify so it's visible
+        if(si === 2) pick = Math.floor(Math.random() * backends.length);
+        if((si === 2 || si === 3) && backends.length){ backends[pick].classList.add('lit'); }
+      } else if(doneNode){
+        doneNode.classList.add('lit');          // after several loops, the goal is met
+      }
+      t++;
+    }
+    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){ tick(); setInterval(tick, 1150); }
+  })();
+
+  /* ---- reasoning traces: sync steps to each video ---- */
+  document.querySelectorAll('.reason-grid').forEach(function(root){
+    /* move the task card under the video so the left column isn't empty */
+    const rv = root.querySelector('.reason-video'), instr = root.querySelector('.trace-instr');
+    if(rv && instr) rv.insertBefore(instr, rv.firstChild);
+    const video = root.querySelector('video');
+    const steps = [...root.querySelectorAll('.step')];
+    if(!video || !steps.length) return;
+    const times = steps.map(s => parseFloat(s.dataset.t));
+    const scroller = root.closest('.demo-block');
+    let lastIdx = -1;
+    function update(){
+      const t = video.currentTime;
+      let idx = 0;
+      for(let i=0;i<times.length;i++){ if(t + 0.001 >= times[i]) idx = i; }
+      steps.forEach((el,i)=>{
+        el.classList.toggle('on', i === idx);
+        el.classList.toggle('done', i < idx);
+      });
+      /* auto-follow: as playback advances, scroll the active step into view */
+      if(idx !== lastIdx){
+        lastIdx = idx;
+        if(scroller){
+          const active = steps[idx];
+          const sRect = scroller.getBoundingClientRect();
+          const aRect = active.getBoundingClientRect();
+          const visible = aRect.top >= sRect.top + 8 && aRect.bottom <= sRect.bottom - 8;
+          if(!visible){
+            const target = scroller.scrollTop + (aRect.top - sRect.top) - scroller.clientHeight / 2 + aRect.height / 2;
+            scroller.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+          }
+        }
       }
     }
-    tick(); setInterval(tick, 1150);
-  })();
+    video.addEventListener('timeupdate', update);
+    video.addEventListener('seeked', update);
+    video.addEventListener('loadedmetadata', update);
+    steps.forEach(s => s.addEventListener('click', ()=>{
+      video.currentTime = parseFloat(s.dataset.t) + 0.05;
+      const p = video.play();
+      if(p && p.catch) p.catch(()=>{});
+    }));
+    update();
+  });
 
   /* ---- animate the gap bars when scrolled into view ---- */
   const fills = [...document.querySelectorAll('.fill')];
