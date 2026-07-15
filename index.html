@@ -239,14 +239,14 @@
   .arch .frozen-tag{font-family:var(--mono); font-size:9px; fill:var(--frozen); letter-spacing:.06em; text-anchor:middle}
   .arch .lab{font-family:var(--mono); font-size:10px; fill:var(--slate)}
   .arch .note{font-family:var(--mono); font-size:10px; fill:var(--faint)}
-  /* connectors: thin faint base line w/ dot ends + a travelling colour pulse */
-  .arch .conn{fill:none; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round}
-  .arch .conn.c-slate{stroke:#CAD0D9}
-  .arch .conn.c-ours{stroke:#F3C5DD}
-  .arch .conn.c-frozen{stroke:#C9D6EC}
-  .arch .pulse{fill:none; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round;
-    stroke-dasharray:16 84; stroke-dashoffset:0; opacity:0}
-  .arch .pulse.flowing{opacity:1; animation:archFlow 1.05s linear infinite}
+  /* connectors: a continuous quiet route with a slow, soft travelling highlight */
+  .arch .conn{fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+  .arch .conn.c-slate{stroke:#B8C0CC}
+  .arch .conn.c-ours{stroke:#E9A8CA}
+  .arch .conn.c-frozen{stroke:#B5C8E6}
+  .arch .pulse{fill:none; stroke-width:2.8; stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:34 66; stroke-dashoffset:0; opacity:0}
+  .arch .pulse.flowing{opacity:.72; animation:archFlow 2.8s linear infinite}
   .arch .pulse.p-slate{stroke:var(--slate)}
   .arch .pulse.p-ours{stroke:var(--ours)}
   .arch .pulse.p-frozen{stroke:var(--frozen)}
