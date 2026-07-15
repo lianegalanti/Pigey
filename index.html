@@ -244,9 +244,9 @@
   .arch .conn.c-slate{stroke:#B8C0CC}
   .arch .conn.c-ours{stroke:#E9A8CA}
   .arch .conn.c-frozen{stroke:#B5C8E6}
-  .arch .pulse{fill:none; stroke-width:2.8; stroke-linecap:round; stroke-linejoin:round;
-    stroke-dasharray:34 66; stroke-dashoffset:0; opacity:0}
-  .arch .pulse.flowing{opacity:.72; animation:archFlow 2.8s linear infinite}
+  .arch .pulse{fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:18 82; stroke-dashoffset:0; opacity:0}
+  .arch .pulse.flowing{opacity:.78; animation:archFlow 2.5s linear 1}
   .arch .pulse.p-slate{stroke:var(--slate)}
   .arch .pulse.p-ours{stroke:var(--ours)}
   .arch .pulse.p-frozen{stroke:var(--frozen)}
@@ -1287,7 +1287,7 @@
 
       <figure class="diagram">
         <!-- Hand-drawn schematic. To use your own render instead, replace this <svg> with <img src="static/diagram.png">. -->
-        <svg class="arch" viewBox="0 0 960 524" role="img" aria-label="Architecture: a frontier VLM orchestrator runs a closed loop — Perceive, Reason, Act, Verify — calling two frozen backends (a TAMP planner and a pi-0.5 VLA), verifying outcomes, recovering on failure, and emitting Done.">
+        <svg class="arch" viewBox="0 0 960 680" role="img" aria-label="Architecture: a frontier VLM orchestrator runs a closed loop — Perceive, Reason, Act, Verify — calling two frozen backends (a TAMP planner and a pi-0.5 VLA), verifying outcomes, recovering on failure, and emitting Done.">
           <defs>
             <marker id="dotG" markerWidth="8" markerHeight="8" refX="4" refY="4"><circle cx="4" cy="4" r="2.5" fill="#9AA3B0"/></marker>
             <marker id="dotM" markerWidth="8" markerHeight="8" refX="4" refY="4"><circle cx="4" cy="4" r="2.5" fill="#D6207E"/></marker>
@@ -1300,58 +1300,56 @@
           <text class="t-tool" x="58" y="61" style="font-size:12px">“A kid is visiting — put the toys on the plate, unsafe items in the box.”</text>
 
           <!-- orchestrator panel -->
-          <rect class="panel" x="40" y="100" width="392" height="392" rx="16"/>
+          <rect class="panel" x="40" y="100" width="392" height="500" rx="16"/>
           <text class="t-ey" x="64" y="126">FRONTIER VLM · ORCHESTRATOR</text>
 
           <!-- stages -->
           <g class="stage">
-            <rect class="node" x="100" y="132" width="264" height="52" rx="10"/>
-            <text class="t-node" x="232" y="153">Perceive</text>
-            <text class="t-mono" x="232" y="171">scene + object labels</text>
+            <rect class="node" x="100" y="132" width="264" height="60" rx="10"/>
+            <text class="t-node" x="232" y="157">Perceive</text>
+            <text class="t-mono" x="232" y="177">scene + object labels</text>
           </g>
 
           <g class="stage">
-            <rect class="node" x="100" y="202" width="264" height="52" rx="10"/>
-            <text class="t-node" x="232" y="223">Reason</text>
-            <text class="t-mono" x="232" y="241">plan next subgoal</text>
+            <rect class="node" x="100" y="232" width="264" height="60" rx="10"/>
+            <text class="t-node" x="232" y="257">Reason</text>
+            <text class="t-mono" x="232" y="277">plan next subgoal</text>
           </g>
 
           <g class="stage">
-            <rect class="node" x="100" y="272" width="264" height="52" rx="10"/>
-            <text class="t-node" x="232" y="293">Act</text>
-            <text class="t-mono" x="232" y="311">select &amp; call a backend</text>
+            <rect class="node" x="100" y="332" width="264" height="60" rx="10"/>
+            <text class="t-node" x="232" y="357">Act</text>
+            <text class="t-mono" x="232" y="377">select &amp; call a backend</text>
           </g>
 
           <g class="stage">
-            <rect class="node" x="100" y="342" width="264" height="52" rx="10"/>
-            <text class="t-node" x="232" y="363">Verify</text>
-            <text class="t-mono" x="232" y="381">is_grasped + wrist image</text>
+            <rect class="node" x="100" y="432" width="264" height="60" rx="10"/>
+            <text class="t-node" x="232" y="457">Verify</text>
+            <text class="t-mono" x="232" y="477">is_grasped + wrist image</text>
           </g>
 
           <g class="done-node">
-            <rect class="ours-fill" x="142" y="414" width="180" height="44" rx="10"/>
-            <text class="t-white" x="232" y="441">Done ✓</text>
+            <rect class="ours-fill" x="142" y="532" width="180" height="48" rx="10"/>
+            <text class="t-white" x="232" y="562">Done ✓</text>
           </g>
-          <text class="note" x="64" y="480">closed loop · no motor weights live here</text>
+          <text class="note" x="64" y="588">closed loop · no motor weights live here</text>
 
-          <!-- stage-to-stage connectors: faint line + travelling pulse -->
-          <path class="conn c-slate" d="M232,184 V202" marker-start="url(#dotG)" marker-end="url(#dotG)"/>
-          <path class="pulse p-slate" data-flow="s0" pathLength="100" d="M232,184 V202"/>
-          <path class="conn c-slate" d="M232,254 V272" marker-start="url(#dotG)" marker-end="url(#dotG)"/>
-          <path class="pulse p-slate" data-flow="s1" pathLength="100" d="M232,254 V272"/>
-          <path class="conn c-slate" d="M232,324 V342" marker-start="url(#dotG)" marker-end="url(#dotG)"/>
-          <path class="pulse p-slate" data-flow="s2" pathLength="100" d="M232,324 V342"/>
-          <path class="conn c-ours" d="M232,394 V414" marker-start="url(#dotM)" marker-end="url(#dotM)"/>
-          <path class="pulse p-ours" data-flow="done" pathLength="100" d="M232,394 V414"/>
+          <!-- stage-to-stage connectors: each route spans the full gap between bubbles -->
+          <path class="conn c-slate" d="M232,192 V232" marker-start="url(#dotG)" marker-end="url(#dotG)"/>
+          <path class="pulse p-slate" data-flow="perceive-reason" pathLength="100" d="M232,192 V232"/>
+          <path class="conn c-slate" d="M232,292 V332" marker-start="url(#dotG)" marker-end="url(#dotG)"/>
+          <path class="pulse p-slate" data-flow="reason-act" pathLength="100" d="M232,292 V332"/>
+          <path class="conn c-ours" d="M232,492 V532" marker-start="url(#dotM)" marker-end="url(#dotM)"/>
+          <path class="pulse p-ours" data-flow="done" pathLength="100" d="M232,492 V532"/>
 
-          <!-- recover feedback (verify -> perceive) -->
-          <path class="conn c-ours" d="M100,366 C68,366 68,158 100,158" marker-start="url(#dotM)" marker-end="url(#dotM)"/>
-          <path class="pulse p-ours" data-flow="s3" pathLength="100" d="M100,366 C68,366 68,158 100,158"/>
-          <text class="lab" x="60" y="270" transform="rotate(-90 60 270)" style="fill:var(--ours)">recover · retry · escalate</text>
+          <!-- closed-loop return: Verify -> Perceive -->
+          <path class="conn c-ours" d="M100,462 C58,462 58,162 100,162" marker-start="url(#dotM)" marker-end="url(#dotM)"/>
+          <path class="pulse p-ours" data-flow="verify-perceive" pathLength="100" d="M100,462 C58,462 58,162 100,162"/>
+          <text class="lab" x="50" y="312" transform="rotate(-90 50 312)" style="fill:var(--ours)">recover · retry · escalate</text>
 
           <!-- frozen backends -->
           <g class="backend">
-            <rect class="frozen-box" x="560" y="150" width="360" height="140" rx="14"/>
+            <rect class="frozen-box" x="560" y="150" width="360" height="160" rx="14"/>
             <text class="t-title" x="584" y="183">TAMP backend</text>
             <rect class="tagpill" x="836" y="165" width="62" height="22" rx="11"/>
             <text class="frozen-tag" x="867" y="180">FROZEN</text>
@@ -1360,36 +1358,35 @@
           </g>
 
           <g class="backend">
-            <rect class="frozen-box" x="560" y="320" width="360" height="140" rx="14"/>
-            <text class="t-title" x="584" y="353">π<tspan font-size="10" dy="3">0.5</tspan><tspan dy="-3"> VLA backend</tspan></text>
-            <rect class="tagpill" x="836" y="335" width="62" height="22" rx="11"/>
-            <text class="frozen-tag" x="867" y="350">FROZEN</text>
-            <text class="t-tool" x="584" y="382">VLARollout(s)</text>
-            <text class="t-desc" x="584" y="408">deformable · contact-rich control</text>
+            <rect class="frozen-box" x="560" y="370" width="360" height="160" rx="14"/>
+            <text class="t-title" x="584" y="403">π<tspan font-size="10" dy="3">0.5</tspan><tspan dy="-3"> VLA backend</tspan></text>
+            <rect class="tagpill" x="836" y="385" width="62" height="22" rx="11"/>
+            <text class="frozen-tag" x="867" y="400">FROZEN</text>
+            <text class="t-tool" x="584" y="432">VLARollout(s)</text>
+            <text class="t-desc" x="584" y="458">deformable · contact-rich control</text>
           </g>
 
-          <!-- call: Act -> both frozen backends (rounded elbows) -->
-          <path class="conn c-frozen" d="M364,292 H497 Q505,292 505,284 V213 Q505,205 513,205 H556" marker-start="url(#dotS)" marker-end="url(#dotS)"/>
-          <path class="pulse p-frozen" data-flow="s2" data-be="0" pathLength="100" d="M364,292 H497 Q505,292 505,284 V213 Q505,205 513,205 H556"/>
-          <path class="conn c-frozen" d="M505,292 V367 Q505,375 513,375 H556" marker-end="url(#dotS)"/>
-          <path class="pulse p-frozen" data-flow="s2" data-be="1" pathLength="100" d="M505,292 V367 Q505,375 513,375 H556"/>
-          <circle cx="505" cy="292" r="3.2" fill="#6E8BC0"/>
-          <text class="lab" x="394" y="284">call subgoal</text>
-          <text class="lab" x="512" y="200" style="fill:var(--frozen)">rigid</text>
-          <text class="lab" x="512" y="369" style="fill:var(--frozen)">deformable</text>
+          <!-- call: Act -> one randomly selected frozen backend -->
+          <path class="conn c-frozen" d="M364,362 C438,362 478,230 556,230" marker-start="url(#dotS)" marker-end="url(#dotS)"/>
+          <path class="pulse p-frozen" data-flow="act-backend" data-be="0" pathLength="100" d="M364,362 C438,362 478,230 556,230"/>
+          <path class="conn c-frozen" d="M364,362 C438,362 478,450 556,450" marker-start="url(#dotS)" marker-end="url(#dotS)"/>
+          <path class="pulse p-frozen" data-flow="act-backend" data-be="1" pathLength="100" d="M364,362 C438,362 478,450 556,450"/>
+          <text class="lab" x="394" y="352">call subgoal</text>
+          <text class="lab" x="512" y="225" style="fill:var(--frozen)">rigid</text>
+          <text class="lab" x="512" y="445" style="fill:var(--frozen)">deformable</text>
 
-          <!-- observation: backends -> Verify (rounded elbows) -->
-          <path class="conn c-frozen" d="M556,262 H483 Q475,262 475,270 V352 Q475,360 467,360 H366" marker-start="url(#dotS)" marker-end="url(#dotS)"/>
-          <path class="pulse p-frozen" data-flow="s2" data-be="0" pathLength="100" d="M556,262 H483 Q475,262 475,270 V352 Q475,360 467,360 H366"/>
-          <path class="conn c-frozen" d="M556,408 H483 Q475,408 475,400 V360" marker-start="url(#dotS)"/>
-          <path class="pulse p-frozen" data-flow="s2" data-be="1" pathLength="100" d="M556,408 H483 Q475,408 475,400 V360"/>
-          <text class="lab" x="394" y="354">observation</text>
+          <!-- observation: that same backend -> Verify -->
+          <path class="conn c-frozen" d="M556,270 C474,270 438,462 364,462" marker-start="url(#dotS)" marker-end="url(#dotS)"/>
+          <path class="pulse p-frozen" data-flow="backend-verify" data-be="0" pathLength="100" d="M556,270 C474,270 438,462 364,462"/>
+          <path class="conn c-frozen" d="M556,490 C500,490 438,462 364,462" marker-start="url(#dotS)" marker-end="url(#dotS)"/>
+          <path class="pulse p-frozen" data-flow="backend-verify" data-be="1" pathLength="100" d="M556,490 C500,490 438,462 364,462"/>
+          <text class="lab" x="394" y="452">observation</text>
 
           <!-- legend -->
-          <rect class="ours-fill" x="44" y="502" width="13" height="13" rx="3"/>
-          <text class="lab" x="64" y="512">orchestration — added at inference, no training</text>
-          <rect class="frozen-box" x="430" y="502" width="13" height="13" rx="3"/>
-          <text class="lab" x="450" y="512">frozen skill — reused, never trained</text>
+          <rect class="ours-fill" x="44" y="640" width="13" height="13" rx="3"/>
+          <text class="lab" x="64" y="650">orchestration — added at inference, no training</text>
+          <rect class="frozen-box" x="430" y="640" width="13" height="13" rx="3"/>
+          <text class="lab" x="450" y="650">frozen skill — reused, never trained</text>
         </svg>
         <figcaption>A frontier VLM runs a closed loop — observe, reason, act, verify — over two frozen backends: TAMP for rigid pick-and-place, and a π<sub>0.5</sub> VLA for deformable and recovery actions. It routes each subgoal, verifies the outcome from the sensor and wrist image, and recovers on failure — emitting <em>Done</em> only once the goal state holds.</figcaption>
       </figure>
@@ -1592,34 +1589,40 @@
     const doneNode = arch.querySelector('.done-node');
     if(!stages.length) return;
     const LOOPS = 3;                            // loops before the task "completes"
-    const total = stages.length * LOOPS + 1;    // +1 frame for Done
-    let t = 0, pick = 0;
+    // One travelling pulse completes one full connection before the next starts.
+    const route = [
+      {flow:'act-backend', stages:[2], backend:true},
+      {flow:'backend-verify', stages:[3], backend:true},
+      {flow:'verify-perceive', stages:[3,0]},
+      {flow:'perceive-reason', stages:[0,1]},
+      {flow:'reason-act', stages:[1,2]}
+    ];
+    let routeStep = 0, loop = 0, pick = 0;
     function tick(){
-      const pos = t % total;
       stages.forEach(s=> s.classList.remove('lit'));
       backends.forEach(b=> b.classList.remove('lit'));
       if(doneNode) doneNode.classList.remove('lit');
-      let key = null;                           // which connectors should flow this frame
-      if(pos < stages.length * LOOPS){
-        const si = pos % stages.length;
-        stages[si].classList.add('lit');
-        // choose a random backend when "Act" starts; keep it lit through Verify so it's visible
-        if(si === 2) pick = Math.floor(Math.random() * backends.length);
-        if((si === 2 || si === 3) && backends.length){ backends[pick].classList.add('lit'); }
-        key = 's' + si;
+      let current = null;
+      if(loop < LOOPS){
+        current = route[routeStep];
+        if(routeStep === 0) pick = Math.floor(Math.random() * backends.length);
+        current.stages.forEach(si=> stages[si].classList.add('lit'));
+        if(current.backend && backends.length) backends[pick].classList.add('lit');
       } else if(doneNode){
         doneNode.classList.add('lit');          // after several loops, the goal is met
-        key = 'done';
       }
-      // only pulse the connectors leaving the active bubble (and the picked backend's I/O)
+      // Only the selected route is active, so the pulse visibly arrives before the next route starts.
       pulses.forEach(p=>{
-        const on = p.dataset.flow === key &&
+        const on = current && p.dataset.flow === current.flow &&
           (p.dataset.be === undefined || parseInt(p.dataset.be, 10) === pick);
         p.classList.toggle('flowing', on);
       });
-      t++;
+      if(current){
+        routeStep++;
+        if(routeStep >= route.length){ routeStep = 0; loop++; }
+      }
     }
-    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){ tick(); setInterval(tick, 1150); }
+    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){ tick(); setInterval(tick, 2600); }
   })();
 
   /* ---- reasoning traces: sync steps to each video ---- */
