@@ -246,7 +246,8 @@
   .arch .conn.c-frozen{stroke:#B5C8E6}
   .arch .pulse{fill:none; stroke-width:3; stroke-linecap:round; stroke-linejoin:round;
     stroke-dasharray:18 82; stroke-dashoffset:0; opacity:0}
-  .arch .pulse.flowing{opacity:.78; animation:archFlow 2.5s linear 1}
+  /* Hold the pulse at its destination until the next route takes over; this prevents a snap-back to the origin. */
+  .arch .pulse.flowing{opacity:.78; animation:archFlow 2.6s linear 1 forwards}
   .arch .pulse.p-slate{stroke:var(--slate)}
   .arch .pulse.p-ours{stroke:var(--ours)}
   .arch .pulse.p-frozen{stroke:var(--frozen)}
