@@ -1591,15 +1591,17 @@
     if(!stages.length) return;
     const LOOPS = 3;                            // loops before the task "completes"
     // One travelling pulse completes one full connection before the next starts.
+    // Bubble highlights are applied on arrival, not when the pulse leaves its source.
     const route = [
-      {flow:'act-backend', stages:[2], backend:true},
-      {flow:'backend-verify', stages:[3], backend:true},
-      {flow:'verify-perceive', stages:[3,0]},
-      {flow:'perceive-reason', stages:[0,1]},
-      {flow:'reason-act', stages:[1,2]}
+      {flow:'act-backend', fromStages:[2], toBackend:true},
+      {flow:'backend-verify', fromBackend:true, toStages:[3]},
+      {flow:'verify-perceive', fromStages:[3], toStages:[0]},
+      {flow:'perceive-reason', fromStages:[0], toStages:[1]},
+      {flow:'reason-act', fromStages:[1], toStages:[2]}
     ];
-    let routeStep = 0, loop = 0, pick = 0;
+    let routeStep = 0, loop = 0, pick = 0, arrivalTimer = null;
     function tick(){
+      if(arrivalTimer) clearTimeout(arrivalTimer);
       stages.forEach(s=> s.classList.remove('lit'));
       backends.forEach(b=> b.classList.remove('lit'));
       if(doneNode) doneNode.classList.remove('lit');
@@ -1607,8 +1609,8 @@
       if(loop < LOOPS){
         current = route[routeStep];
         if(routeStep === 0) pick = Math.floor(Math.random() * backends.length);
-        current.stages.forEach(si=> stages[si].classList.add('lit'));
-        if(current.backend && backends.length) backends[pick].classList.add('lit');
+        (current.fromStages || []).forEach(si=> stages[si].classList.add('lit'));
+        if(current.fromBackend && backends.length) backends[pick].classList.add('lit');
       } else if(doneNode){
         doneNode.classList.add('lit');          // after several loops, the goal is met
       }
@@ -1619,6 +1621,12 @@
         p.classList.toggle('flowing', on);
       });
       if(current){
+        arrivalTimer = setTimeout(()=>{
+          (current.fromStages || []).forEach(si=> stages[si].classList.remove('lit'));
+          if(current.fromBackend && backends.length) backends[pick].classList.remove('lit');
+          (current.toStages || []).forEach(si=> stages[si].classList.add('lit'));
+          if(current.toBackend && backends.length) backends[pick].classList.add('lit');
+        }, 2580);
         routeStep++;
         if(routeStep >= route.length){ routeStep = 0; loop++; }
       }
