@@ -1298,7 +1298,7 @@
           <!-- instruction -->
           <rect class="panel" x="40" y="22" width="620" height="48" rx="12"/>
           <text class="t-ey" x="58" y="42">INSTRUCTION</text>
-          <text class="t-tool" x="58" y="61" style="font-size:12px">“A kid is visiting — put the toys on the plate, unsafe items in the box.”</text>
+          <text id="diagram-task" class="t-tool" x="58" y="61" style="font-size:12px">“A kid is visiting — put the toys on the plate, unsafe items in the box.”</text>
 
           <!-- orchestrator panel -->
           <rect class="panel" x="40" y="100" width="392" height="500" rx="16"/>
@@ -1582,8 +1582,16 @@
     const backends = [...arch.querySelectorAll('.backend')];
     const pulses = [...arch.querySelectorAll('.pulse')];
     const doneNode = arch.querySelector('.done-node');
+    const instruction = arch.querySelector('#diagram-task');
     if(!stages.length) return;
     const LOOPS = 3;                            // loops before the task "completes"
+    const tasks = [
+      'A kid is visiting — put the toys on the plate, unsafe items in the box.',
+      'Put the doll in the cup — move anything already inside aside first.',
+      'Put the doll on the plate; if it is occupied, use an empty bowl.',
+      'Put only the kid-safe toys in the bowl; keep hazards out.',
+      'Find the doll and place it in the basket, clearing obstacles first.'
+    ];
     // One travelling pulse completes one full connection before the next starts.
     // Bubble highlights are applied on arrival, not when the pulse leaves its source.
     const route = [
@@ -1593,7 +1601,7 @@
       {flow:'perceive-reason', fromStages:[0], toStages:[1]},
       {flow:'reason-act', fromStages:[1], toStages:[2]}
     ];
-    let routeStep = 0, loop = 0, pick = 0, arrivalTimer = null;
+    let routeStep = 0, loop = 0, pick = 0, taskIndex = 0, arrivalTimer = null;
     function tick(){
       if(arrivalTimer) clearTimeout(arrivalTimer);
       stages.forEach(s=> s.classList.remove('lit'));
@@ -1607,6 +1615,10 @@
         if(current.fromBackend && backends.length) backends[pick].classList.add('lit');
       } else if(doneNode){
         doneNode.classList.add('lit');          // after several loops, the goal is met
+        taskIndex = (taskIndex + 1) % tasks.length;
+        if(instruction) instruction.textContent = `“${tasks[taskIndex]}”`;
+        loop = 0;
+        routeStep = 0;
       }
       // Only the selected route is active, so the pulse visibly arrives before the next route starts.
       pulses.forEach(p=>{
