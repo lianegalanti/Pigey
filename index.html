@@ -251,7 +251,8 @@
   .arch .pulse.p-slate{stroke:var(--slate)}
   .arch .pulse.p-ours{stroke:var(--ours)}
   .arch .pulse.p-frozen{stroke:var(--frozen)}
-  @keyframes archFlow{ to{ stroke-dashoffset:-100 } }
+  /* -82 moves the highlight to the final dash segment; -100 would wrap the pattern back to the start. */
+  @keyframes archFlow{ to{ stroke-dashoffset:-82 } }
   /* auto-running diagram highlight (animates on its own) */
   .arch .stage .node{transition:fill .35s, stroke .35s}
   .arch .stage.lit .node{fill:var(--ours-tint); stroke:var(--ours); stroke-width:2.2}
