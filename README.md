@@ -7,8 +7,6 @@ robotic manipulation with no new policy training.
 
 **📄 Paper:** coming soon
 
-**💻 Code:** coming soon
-
 ---
 
 *Liane Galanti · Dhruv Shah · Tri Dao*
