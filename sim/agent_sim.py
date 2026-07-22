@@ -1,25 +1,28 @@
 """
-Cortex Toolbox harness — LLM as orchestrator over a heterogeneous primitive set.
+LIBERO agent harness — LLM as orchestrator over a heterogeneous primitive set.
 
 Architecture:
     LLM (brain) ──tools──> harness ──> LIBERO env (in-process)
-                                  ├──> pi0.5 policy (WebSocket, language-conditioned VLA)
-                                  └──> TipTop bridge (geometric grasp, collision-aware motion, TAMP solver)
+                                  └──> pi0.5 policy (WebSocket, language-conditioned VLA)
 
-The LLM picks the right primitive per step from a heterogeneous toolbox:
-    Core (open-loop):     MoveTo, Grasp, Release
-    Perception:           Perceive, LocateBox, DetectObjects
-    Motor — neural:       VLARollout (pi0.5 — dexterous, language-conditioned, can close on air)
-    Motor — geometric:    GraspGeometric (deterministic top-down grasp, no language, robust on small objects)
-    Motion planning:      PlanReach (collision-aware Cartesian motion, vs open-loop MoveTo)
-    Task planning:        PlanFullTask (full TAMP solve via TipTop, last-resort escalation)
-    Control flow:         Done
+Tools exposed to the LLM:
+    Perceive         — numbered bbox detections + wrist/agent images + robot state
+    Grasp            — contact-aware grasp on detection #target_index
+    Place            — contact-aware placement (flat surface or container cavity)
+    Release          — open gripper
+    GoHome           — reset arm to home pose
+    VLARollout       — pi0.5 closed-loop rollout on a verbatim subgoal
+    VerifyCandidate  — VLM crop-and-confirm to disambiguate detections
 
-Each tool has different strengths and failure modes — the LLM is responsible for routing.
-The thesis: capability is latent in the toolbox; the LLM unlocks it by picking the right tool per step.
+Each tool has different strengths and failure modes; the LLM routes between them.
+
+Perception is Gemini Robotics ER (numbered bbox overlays). The agent sees only
+camera images, robot state (`robot0_gripper_qpos`, `ee_force`, EE pose via forward
+kinematics), and Gemini ER detections. Object ground-truth positions and contact
+state are not surfaced.
 
 Usage:
-    # With harness (LLM orchestration over full toolbox):
+    # With harness (LLM orchestration over the toolbox):
     ANTHROPIC_API_KEY=... python agent_sim.py --mode harness --suite libero_object_swap --task 0 \
         --model claude-sonnet-4-6 --policy-host localhost --policy-port 8000
 
@@ -29,7 +32,8 @@ Usage:
 """
 from __future__ import annotations
 
-# Removing OWL-ViT broke an import-order side-effect that SAM relied on.
+# Preemptive import of transformers.models.owlv2 stabilizes huggingface_hub
+# state; SAM's own initialization can otherwise fail depending on import order.
 try:
     import transformers.models.owlv2  # noqa: F401
 except Exception:

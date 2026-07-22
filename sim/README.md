@@ -29,7 +29,7 @@ Install each upstream first; this folder is glue on top.
 - **openpi** — <https://github.com/Physical-Intelligence/openpi> — serves `pi05_libero` on `ws://<host>:<port>`.
 - **LIBERO** — <https://github.com/Lifelong-Robot-Learning/LIBERO> — the underlying simulator.
 - **LIBERO-PRO** — <https://github.com/Zxy-MLlab/LIBERO-PRO> — the extended task suite used for the reported numbers.
-- **Gemini Robotics ER** — perception model called via LiteLLM; requires `GEMINI_API_KEY` with preview access to `gemini/gemini-robotics-er-1.6-preview`.
+- **Gemini Robotics ER** — perception model called via LiteLLM as `gemini/gemini-robotics-er-1.6-preview`; requires `GEMINI_API_KEY`.
 - **LiteLLM** — Python package; agent LLM is model-agnostic (validated with Gemini 3.5 Flash, Claude Opus 4.7, Claude Sonnet 4.6, Claude Haiku 4.5, Claude Fable 5, GPT-5-mini, Gemini 3.1 Pro).
 
 ## Launching the pi0.5 policy server
@@ -67,7 +67,7 @@ Symptom without the flag: server boots and listens, then dies with `ptxas fatal 
 ```bash
 export ANTHROPIC_API_KEY=...            # or GEMINI_API_KEY / OPENAI_API_KEY
 export GEMINI_API_KEY=...               # required for ER perception
-# HARNESS_PERCEPTION defaults to gemini_er — override only for baseline experiments
+# HARNESS_PERCEPTION defaults to gemini_er (the only supported mode).
 
 python agent_sim.py \
   --mode harness --suite libero_goal_task --task 0 --episode 2 \

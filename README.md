@@ -80,4 +80,4 @@ Model checkpoints: `pi05_libero` for `sim/` (see openpi docs); `pi05_droid` for 
 
 LLM: model-agnostic (LiteLLM). Validated with Gemini 3.5 Flash, Claude Opus 4.7, Claude Sonnet 4.6, Claude Haiku 4.5, Claude Fable 5, Gemini 3.1 Pro, GPT-5-mini.
 
-Gemini Robotics ER (perception in the sim harness): `gemini/gemini-robotics-er-1.6-preview` — currently a limited-access preview endpoint.
+Gemini Robotics ER (perception in the sim harness): called via LiteLLM as `gemini/gemini-robotics-er-1.6-preview`; requires `GEMINI_API_KEY`.
