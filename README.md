@@ -1,4 +1,4 @@
-# Towards Physical Agency: The Orchestration Gap in Generalist Robots
+# Addressing the Orchestration Gap in Generalist Robots via Physical Agency
 
 A frozen-skill robot system driven by a closed-loop VLM orchestrator — reasoning-heavy
 robotic manipulation with no new policy training.
