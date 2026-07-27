@@ -430,7 +430,8 @@
 
   /* ---------- bibtex ---------- */
   .bibtex{position:relative; background:var(--console); color:var(--console-text); border-radius:14px; overflow:hidden}
-  .bibtex pre{margin:0; padding:22px; overflow-x:auto; font-family:var(--mono); font-size:13px; line-height:1.6; color:var(--console-text)}
+  .bibtex pre{margin:0; padding:46px 22px 24px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; tab-size:2;
+    font-family:var(--mono); font-size:13px; line-height:1.7; letter-spacing:.01em; color:var(--console-text)}
   .bibtex .copy{
     position:absolute; top:12px; right:12px; font-family:var(--mono); font-size:12px; cursor:pointer;
     background:transparent; color:var(--console-dim); border:1px solid var(--console-line); border-radius:7px; padding:7px 11px; transition:.18s;
@@ -1496,14 +1497,14 @@
     <div class="head reveal"><span class="eyebrow">Citation</span><h2>BibTeX</h2></div>
     <div class="bibtex reveal">
       <button class="copy" id="copybtn">copy</button>
-      <pre id="bib">@misc{galanti2026addressingorchestrationgapgeneralist,
-      title={Addressing the Orchestration Gap in Generalist Robots via Physical Agency},
-      author={Liane Galanti and Dhruv Shah and Tri Dao},
-      year={2026},
-      eprint={2607.21725},
-      archivePrefix={arXiv},
-      primaryClass={cs.RO},
-      url={https://arxiv.org/abs/2607.21725},
+      <pre id="bib" data-citation="@misc{galanti2026addressingorchestrationgapgeneralist,&#10;      title={Addressing the Orchestration Gap in Generalist Robots via Physical Agency},&#10;      author={Liane Galanti and Dhruv Shah and Tri Dao},&#10;      year={2026},&#10;      eprint={2607.21725},&#10;      archivePrefix={arXiv},&#10;      primaryClass={cs.RO},&#10;      url={https://arxiv.org/abs/2607.21725},&#10;}">@misc{galanti2026addressingorchestrationgapgeneralist,
+  title         = {Addressing the Orchestration Gap in Generalist Robots via Physical Agency},
+  author        = {Liane Galanti and Dhruv Shah and Tri Dao},
+  year          = {2026},
+  eprint        = {2607.21725},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.RO},
+  url           = {https://arxiv.org/abs/2607.21725},
 }</pre>
     </div>
   </div>
@@ -1712,7 +1713,7 @@
   /* ---- copy bibtex ---- */
   const btn = document.getElementById('copybtn');
   btn.addEventListener('click', async ()=>{
-    try{ await navigator.clipboard.writeText(document.getElementById('bib').textContent);
+    try{ const bib = document.getElementById('bib'); await navigator.clipboard.writeText(bib.dataset.citation || bib.textContent);
       btn.textContent='copied'; btn.classList.add('ok');
       setTimeout(()=>{ btn.textContent='copy'; btn.classList.remove('ok'); }, 1600);
     }catch(e){ btn.textContent='select &amp; copy'; }
