@@ -7,7 +7,6 @@
       <stop offset="1" stop-color="#9F145B"/>
     </linearGradient>
   </defs>
-  <rect width="64" height="64" rx="14" fill="#15171C"/>
   <path d="M9 32C9 13 25 11 32 32s23 19 23 0-16-21-23 0S9 51 9 32Z" fill="none" stroke="#741043" stroke-width="12" stroke-linecap="round"/>
   <path d="M9 32C9 13 25 11 32 32s23 19 23 0-16-21-23 0S9 51 9 32Z" fill="none" stroke="url(#pink-loop)" stroke-width="9" stroke-linecap="round"/>
   <path d="M11 28C13 17 22 15 28 22" fill="none" stroke="#FFD9E9" stroke-width="2" stroke-linecap="round" opacity=".55"/>
