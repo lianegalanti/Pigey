@@ -5,7 +5,7 @@ robotic manipulation with no new policy training.
 
 **🌐 Project page:** https://lianegalanti.github.io/Pigey/
 
-**📄 Paper:** coming soon
+**📄 Paper:** [arXiv:2607.21725](https://arxiv.org/abs/2607.21725)
 
 ---
 
